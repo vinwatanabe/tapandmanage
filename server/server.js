@@ -24,9 +24,7 @@ mongoose
 	.catch((err) => console.log(err));
 
 // Routes
-app.get('/', (req, res) => {
-	res.send('Worked!');
-});
+app.use('/company', require('./routes/company'));
 
 // Listen
 const PORT = process.env.PORT || 5000;
