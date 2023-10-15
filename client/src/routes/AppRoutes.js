@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import Homepage from '../pages/Homepage/Homepage';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
+import Dashboard from '../pages/Dashboard/Dashboard';
 import Inventory from '../pages/Inventory/Inventory';
 import ItemDetails from '../pages/ItemDetails/ItemDetails';
 import NotFound from '../pages/NotFound/NotFound';
@@ -15,6 +16,7 @@ const AppRoutes = () => {
 			<Route path='/' element={<Homepage />} />
 			<Route path='/login' element={<Login />} />
 			<Route path='/register' element={<Register />} />
+			<Route path='/dashboard' element={<Dashboard />} />
 			<Route path='/inventory' element={<Inventory />} />
 			<Route path='/item-details' element={<ItemDetails />} />
 			<Route path='*' element={<NotFound />} />

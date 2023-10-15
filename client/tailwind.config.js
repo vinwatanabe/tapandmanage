@@ -18,6 +18,8 @@ module.exports = {
 			borderGrey: '#D8D8D8',
 			lightGreen: '#E8F4ED',
 			darkGreen: '#389C92',
+			lightRed: '#FBECED',
+			darkRed: '#DC4444',
 		},
 		extend: {
 			fontSize: {

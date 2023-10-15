@@ -10,7 +10,7 @@ const Sidebar = () => {
 				</div>
 
 				<ul className='flex flex-col text-white mt-5'>
-					<Link to={'#!'}>
+					<Link to={'/dashboard'}>
 						<li className='flex items-center hover:bg-darkBlueSelect pt-3 pb-3'>
 							<span className='material-symbols-outlined mr-2 ml-10'>
 								grid_view
@@ -18,7 +18,7 @@ const Sidebar = () => {
 							<p>Dashboard</p>
 						</li>
 					</Link>
-					<Link to={'#!'}>
+					<Link to={'/inventory'}>
 						<li className='flex items-center hover:bg-darkBlueSelect pt-3 pb-3'>
 							<span className='material-symbols-outlined mr-2 ml-10'>
 								inventory_2
