@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="12.414" height="7.622" viewBox="0 0 12.414 7.622">
+  <g id="Arrow" transform="translate(0.707 0.707)">
+    <path id="Arrow-Down" d="M5.5,5.5,5,6l.5-.5L0,0,5.5,5.5,11,0,5.5,5.5,6,6Z" fill="none" stroke="#7c90a2" stroke-linecap="round" stroke-width="2"/>
+  </g>
+</svg>

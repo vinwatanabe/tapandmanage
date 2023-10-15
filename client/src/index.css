@@ -6,6 +6,6 @@
 
 @layer base {
 	body {
-		@apply font-roboto font-normal text-base text-darkBlue bg-white;
+		@apply font-roboto font-normal text-base text-darkBlue bg-background;
 	}
 }

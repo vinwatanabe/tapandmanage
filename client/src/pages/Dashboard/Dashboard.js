@@ -1,14 +1,12 @@
 import React from 'react';
 import Sidebar from '../../components/Sidebar';
-import Header from '../../components/Header';
 
-const Inventory = () => {
+const Dashboard = () => {
 	return (
 		<>
 			<Sidebar />
-			<Header />
 		</>
 	);
 };
 
-export default Inventory;
+export default Dashboard;
