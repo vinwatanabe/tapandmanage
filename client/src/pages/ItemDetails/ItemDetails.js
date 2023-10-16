@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import ItemDetailsBox from '../../components/ItemDetailsBox';
-import ButtonPrimary from '../../components/ButtonPrimary';
-import ButtonSecondary from '../../components/ButtonSecondary';
 
 const ItemDetails = () => {
 	return (
@@ -23,17 +21,6 @@ const ItemDetails = () => {
 									edit_square
 								</span>
 							</Link>
-						</div>
-
-						<div className='flex flex-row'>
-							<ButtonSecondary
-								text={'Read NFC'}
-								url={'#!'}
-								icon={'nfc'}
-								styles={'mr-3'}
-							/>
-
-							<ButtonPrimary text={'Add group'} url={'#!'} />
 						</div>
 					</div>
 
