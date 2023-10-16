@@ -19,6 +19,7 @@ const AddGroupModal = () => {
 							type='text'
 							id='group-name'
 							name='group-name'
+							placeholder='Type the group name'
 							className='border border-borderGrey px-6 py-2 rounded-full w-full'
 						/>
 					</div>

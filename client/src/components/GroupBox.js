@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ButtonPrimary from '../components/ButtonPrimary';
 import Pagination from './Pagination';
+import { showAddItemModal } from '../js/displayModal';
 
 const GroupBox = ({ groupName, styles }) => {
 	return (
@@ -16,7 +17,7 @@ const GroupBox = ({ groupName, styles }) => {
 					</Link>
 				</div>
 
-				<ButtonPrimary text={'Add item'} url={'#!'} />
+				<ButtonPrimary text={'Add item'} click={showAddItemModal} />
 			</div>
 
 			<div>
