@@ -4,7 +4,7 @@ import Logo from '../images/brand/tap-manage-logo.svg';
 const Sidebar = () => {
 	return (
 		<>
-			<aside className='flex-none bg-darkBlue w-72 h-screen'>
+			<aside className='flex-none bg-darkBlue w-72 h-screen fixed'>
 				<div className='flex items-center h-20 ml-10'>
 					<img className='w-44 h-fit' src={Logo} alt='Tap & Manage Logo' />
 				</div>
