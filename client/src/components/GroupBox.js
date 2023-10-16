@@ -5,7 +5,7 @@ import Pagination from './Pagination';
 
 const GroupBox = ({ groupName, styles }) => {
 	return (
-		<div className={`bg-white p-8 rounded-lg ${styles}`}>
+		<div className={`bg-white p-8 rounded-lg mb-8 ${styles}`}>
 			<div className='flex flex-row items-center justify-between mb-5'>
 				<div className='flex flex-row gap-x-2'>
 					<p className='font-bold'>{groupName}</p>
@@ -39,98 +39,97 @@ const GroupBox = ({ groupName, styles }) => {
 			</div>
 
 			<div>
-				<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center'>
-					<p className='my-1 basis-1/12 text-left'>CF123456</p>
-					<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
-					<p className='my-1 basis-1/12'>13 Unts</p>
-					<p className='my-1 basis-1/12'>$12.50</p>
-					<p className='my-1 basis-1/12'>$30.00</p>
-					<p className='my-1 basis-1/12 font-bold'>59.6%</p>
-					<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-						In Stock
-					</p>
-					<p className='my-1 basis-1/12'>12/11/2023</p>
-				</div>
+				<Link to={'/item-details'}>
+					<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
+						<p className='my-1 basis-1/12 text-left'>CF123456</p>
+						<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
+						<p className='my-1 basis-1/12'>13 Unts</p>
+						<p className='my-1 basis-1/12'>$12.50</p>
+						<p className='my-1 basis-1/12'>$30.00</p>
+						<p className='my-1 basis-1/12 font-bold'>59.6%</p>
+						<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
+							In Stock
+						</p>
+						<p className='my-1 basis-1/12'>12/11/2023</p>
+					</div>
+				</Link>
+
 				<hr className='text-borderGrey' />
 			</div>
 
 			<div>
-				<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center'>
-					<p className='my-1 basis-1/12 text-left'>CF123456</p>
-					<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
-					<p className='my-1 basis-1/12'>13 Unts</p>
-					<p className='my-1 basis-1/12'>$12.50</p>
-					<p className='my-1 basis-1/12'>$30.00</p>
-					<p className='my-1 basis-1/12 font-bold'>59.6%</p>
-					<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-						In Stock
-					</p>
-					<p className='my-1 basis-1/12'>12/11/2023</p>
-				</div>
+				<Link to={'/item-details'}>
+					<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
+						<p className='my-1 basis-1/12 text-left'>CF123456</p>
+						<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
+						<p className='my-1 basis-1/12'>13 Unts</p>
+						<p className='my-1 basis-1/12'>$12.50</p>
+						<p className='my-1 basis-1/12'>$30.00</p>
+						<p className='my-1 basis-1/12 font-bold'>59.6%</p>
+						<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
+							In Stock
+						</p>
+						<p className='my-1 basis-1/12'>12/11/2023</p>
+					</div>
+				</Link>
+
 				<hr className='text-borderGrey' />
 			</div>
 
 			<div>
-				<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center'>
-					<p className='my-1 basis-1/12 text-left'>CF123456</p>
-					<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
-					<p className='my-1 basis-1/12'>13 Unts</p>
-					<p className='my-1 basis-1/12'>$12.50</p>
-					<p className='my-1 basis-1/12'>$30.00</p>
-					<p className='my-1 basis-1/12 font-bold'>59.6%</p>
-					<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-						In Stock
-					</p>
-					<p className='my-1 basis-1/12'>12/11/2023</p>
-				</div>
+				<Link to={'/item-details'}>
+					<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
+						<p className='my-1 basis-1/12 text-left'>CF123456</p>
+						<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
+						<p className='my-1 basis-1/12'>13 Unts</p>
+						<p className='my-1 basis-1/12'>$12.50</p>
+						<p className='my-1 basis-1/12'>$30.00</p>
+						<p className='my-1 basis-1/12 font-bold'>59.6%</p>
+						<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
+							In Stock
+						</p>
+						<p className='my-1 basis-1/12'>12/11/2023</p>
+					</div>
+				</Link>
+
 				<hr className='text-borderGrey' />
 			</div>
 
 			<div>
-				<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center'>
-					<p className='my-1 basis-1/12 text-left'>CF123456</p>
-					<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
-					<p className='my-1 basis-1/12'>13 Unts</p>
-					<p className='my-1 basis-1/12'>$12.50</p>
-					<p className='my-1 basis-1/12'>$30.00</p>
-					<p className='my-1 basis-1/12 font-bold'>59.6%</p>
-					<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-						In Stock
-					</p>
-					<p className='my-1 basis-1/12'>12/11/2023</p>
-				</div>
+				<Link to={'/item-details'}>
+					<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
+						<p className='my-1 basis-1/12 text-left'>CF123456</p>
+						<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
+						<p className='my-1 basis-1/12'>13 Unts</p>
+						<p className='my-1 basis-1/12'>$12.50</p>
+						<p className='my-1 basis-1/12'>$30.00</p>
+						<p className='my-1 basis-1/12 font-bold'>59.6%</p>
+						<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
+							In Stock
+						</p>
+						<p className='my-1 basis-1/12'>12/11/2023</p>
+					</div>
+				</Link>
+
 				<hr className='text-borderGrey' />
 			</div>
 
 			<div>
-				<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center'>
-					<p className='my-1 basis-1/12 text-left'>CF123456</p>
-					<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
-					<p className='my-1 basis-1/12'>13 Unts</p>
-					<p className='my-1 basis-1/12'>$12.50</p>
-					<p className='my-1 basis-1/12'>$30.00</p>
-					<p className='my-1 basis-1/12 font-bold'>59.6%</p>
-					<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-						In Stock
-					</p>
-					<p className='my-1 basis-1/12'>12/11/2023</p>
-				</div>
-				<hr className='text-borderGrey' />
-			</div>
+				<Link to={'/item-details'}>
+					<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
+						<p className='my-1 basis-1/12 text-left'>CF123456</p>
+						<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
+						<p className='my-1 basis-1/12'>13 Unts</p>
+						<p className='my-1 basis-1/12'>$12.50</p>
+						<p className='my-1 basis-1/12'>$30.00</p>
+						<p className='my-1 basis-1/12 font-bold'>59.6%</p>
+						<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
+							In Stock
+						</p>
+						<p className='my-1 basis-1/12'>12/11/2023</p>
+					</div>
+				</Link>
 
-			<div>
-				<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center'>
-					<p className='my-1 basis-1/12 text-left'>CF123456</p>
-					<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
-					<p className='my-1 basis-1/12'>13 Unts</p>
-					<p className='my-1 basis-1/12'>$12.50</p>
-					<p className='my-1 basis-1/12'>$30.00</p>
-					<p className='my-1 basis-1/12 font-bold'>59.6%</p>
-					<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-						In Stock
-					</p>
-					<p className='my-1 basis-1/12'>12/11/2023</p>
-				</div>
 				<hr className='text-borderGrey' />
 			</div>
 

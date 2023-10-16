@@ -29,7 +29,7 @@ const Inventory = () => {
 					</div>
 
 					<GroupBox groupName={'Freezer'} styles={'mb-8'} />
-					<GroupBox groupName={'Freezer'} />
+					<GroupBox groupName={'Storage'} />
 				</div>
 			</div>
 		</>
