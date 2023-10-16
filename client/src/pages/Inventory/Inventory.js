@@ -3,6 +3,7 @@ import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import GroupBox from '../../components/GroupBox';
 import AddGroupModal from '../../components/AddGroupModal';
+import AddItemModal from '../../components/AddItemModal';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
 import { showGroupModal } from '../../js/displayModal';
@@ -11,6 +12,7 @@ const Inventory = () => {
 	return (
 		<>
 			<AddGroupModal />
+			<AddItemModal />
 
 			<Sidebar />
 			<div className='container w-full flex flex-col float-right ml-72'>
