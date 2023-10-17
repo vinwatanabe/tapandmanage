@@ -28,4 +28,20 @@ const showAddItemModal = () => {
 	showModal('addItemModal');
 };
 
-export { hideGroupModal, showGroupModal, hideAddItemModal, showAddItemModal };
+// READ NFC
+const hideReadNFCModal = () => {
+	hideModal('readNFCModal');
+};
+
+const showReadNFCModal = () => {
+	showModal('readNFCModal');
+};
+
+export {
+	hideGroupModal,
+	showGroupModal,
+	hideAddItemModal,
+	showAddItemModal,
+	hideReadNFCModal,
+	showReadNFCModal,
+};
