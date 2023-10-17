@@ -22,6 +22,7 @@ module.exports = {
 			darkGreen: '#389C92',
 			lightRed: '#FBECED',
 			darkRed: '#DC4444',
+			darkRedHover: '#E56262',
 		},
 		extend: {
 			fontSize: {

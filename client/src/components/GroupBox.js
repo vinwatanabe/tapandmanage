@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ButtonPrimary from '../components/ButtonPrimary';
 import Pagination from './Pagination';
-import { showAddItemModal } from '../js/displayModal';
+import { showAddItemModal, showEditGroupModal } from '../js/displayModal';
 
 const GroupBox = ({ groupName, styles }) => {
 	return (
@@ -10,7 +10,7 @@ const GroupBox = ({ groupName, styles }) => {
 			<div className='flex flex-row items-center justify-between mb-5'>
 				<div className='flex flex-row gap-x-2'>
 					<p className='font-bold'>{groupName}</p>
-					<Link to={'#!'}>
+					<Link onClick={(e) => showEditGroupModal(e)}>
 						<span className='material-symbols-outlined text-detailGrey hover:text-mediumGrey'>
 							edit_square
 						</span>
