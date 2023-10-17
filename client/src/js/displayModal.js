@@ -30,11 +30,34 @@ const showAddItemModal = () => {
 
 // READ NFC
 const hideReadNFCModal = () => {
-	hideModal('readNFCModal');
+	hideModal('NFCModal');
 };
 
 const showReadNFCModal = () => {
-	showModal('readNFCModal');
+	showModal('NFCModal');
+};
+
+// REGISTERING NFC
+const hideRegisteringNFCModal = () => {
+	hideModal('NFCModal');
+};
+
+const showRegisteringNFCModal = () => {
+	showModal('NFCModal');
+};
+
+// REGISTER NFC
+const hideRegisterNFCModal = () => {
+	hideModal('registerNFCModal');
+};
+
+const showRegisterNFCModal = () => {
+	showModal('registerNFCModal');
+};
+
+const saveRegisterNFCModal = () => {
+	hideModal('registerNFCModal');
+	showModal('NFCModal');
 };
 
 export {
@@ -44,4 +67,9 @@ export {
 	showAddItemModal,
 	hideReadNFCModal,
 	showReadNFCModal,
+	hideRegisteringNFCModal,
+	showRegisteringNFCModal,
+	hideRegisterNFCModal,
+	showRegisterNFCModal,
+	saveRegisterNFCModal,
 };
