@@ -26,7 +26,7 @@ const AddGroupModal = () => {
 				</form>
 
 				<div className='flex flex-row justify-end gap-3'>
-					<ButtonPrimary text={'Save'} />
+					<ButtonPrimary text={'Save'} click={hideGroupModal} />
 					<ButtonSecondary text={'Cancel'} click={hideGroupModal} />
 				</div>
 			</div>

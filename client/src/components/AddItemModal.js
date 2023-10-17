@@ -192,7 +192,7 @@ const AddItemModal = () => {
 				</form>
 
 				<div className='flex flex-row justify-end gap-3'>
-					<ButtonPrimary text={'Save'} />
+					<ButtonPrimary text={'Save'} click={hideAddItemModal} />
 					<ButtonSecondary text={'Cancel'} click={hideAddItemModal} />
 				</div>
 			</div>
