@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import GroupBox from '../../components/GroupBox';
 import AddGroupModal from '../../components/AddGroupModal';
 import AddItemModal from '../../components/AddItemModal';
+import EditGroupModal from '../../components/EditGroupModal';
 import NFCModal from '../../components/NFCModal';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
@@ -14,6 +15,7 @@ const Inventory = () => {
 		<>
 			<AddGroupModal />
 			<AddItemModal />
+			<EditGroupModal />
 			<NFCModal NFCType={'read'} />
 
 			<Sidebar />

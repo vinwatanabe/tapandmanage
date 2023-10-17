@@ -19,6 +19,17 @@ const showGroupModal = () => {
 	showModal('addGroupModal');
 };
 
+// EDIT GROUP MODAL
+const hideEditGroupModal = (event) => {
+	event ? event.preventDefault() : hideModal('editGroupModal');
+	hideModal('editGroupModal');
+};
+
+const showEditGroupModal = (event) => {
+	event ? event.preventDefault() : showModal('editGroupModal');
+	showModal('editGroupModal');
+};
+
 // ADD ITEM MODAL
 const hideAddItemModal = () => {
 	hideModal('addItemModal');
@@ -26,6 +37,17 @@ const hideAddItemModal = () => {
 
 const showAddItemModal = () => {
 	showModal('addItemModal');
+};
+
+// EDIT ITEM MODAL
+const hideEditItemModal = (event) => {
+	event ? event.preventDefault() : hideModal('editItemModal');
+	hideModal('editItemModal');
+};
+
+const showEditItemModal = (event) => {
+	event ? event.preventDefault() : showModal('editItemModal');
+	showModal('editItemModal');
 };
 
 // READ NFC
@@ -63,8 +85,12 @@ const saveRegisterNFCModal = () => {
 export {
 	hideGroupModal,
 	showGroupModal,
+	hideEditGroupModal,
+	showEditGroupModal,
 	hideAddItemModal,
 	showAddItemModal,
+	hideEditItemModal,
+	showEditItemModal,
 	hideReadNFCModal,
 	showReadNFCModal,
 	hideRegisteringNFCModal,

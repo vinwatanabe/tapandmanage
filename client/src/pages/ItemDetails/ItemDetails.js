@@ -5,10 +5,13 @@ import Header from '../../components/Header';
 import ItemDetailsBox from '../../components/ItemDetailsBox';
 import RegisterNFCModal from '../../components/RegisterNFCModal';
 import NFCModal from '../../components/NFCModal';
+import EditItemModal from '../../components/EditItemModal';
+import { showEditItemModal } from '../../js/displayModal';
 
 const ItemDetails = () => {
 	return (
 		<>
+			<EditItemModal />
 			<RegisterNFCModal />
 			<NFCModal NFCType={'register'} />
 
@@ -21,7 +24,9 @@ const ItemDetails = () => {
 						<div className='flex flex-row  gap-2 items-center'>
 							<p className='text-title-lg font-bold'>Item details</p>
 
-							<Link to={'#!'} className='flex items-center'>
+							<Link
+								onClick={(e) => showEditItemModal(e)}
+								className='flex items-center'>
 								<span className='material-symbols-outlined text-detailGrey hover:text-mediumGrey'>
 									edit_square
 								</span>
