@@ -1,5 +1,6 @@
 import React from 'react';
 import ButtonPrimary from './ButtonPrimary';
+import { showRegisterNFCModal } from '../js/displayModal';
 
 const ItemDetailsBox = ({ groupName, styles }) => {
 	return (
@@ -94,7 +95,11 @@ const ItemDetailsBox = ({ groupName, styles }) => {
 			</div>
 
 			<div className='flex flex-row justify-end mt-8'>
-				<ButtonPrimary text={'Register NFC'} icon={'NFC'} />
+				<ButtonPrimary
+					text={'Register NFC'}
+					icon={'NFC'}
+					click={showRegisterNFCModal}
+				/>
 			</div>
 		</div>
 	);

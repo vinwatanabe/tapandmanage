@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import ItemDetailsBox from '../../components/ItemDetailsBox';
+import RegisterNFCModal from '../../components/RegisterNFCModal';
+import NFCModal from '../../components/NFCModal';
 
 const ItemDetails = () => {
 	return (
 		<>
+			<RegisterNFCModal />
+			<NFCModal NFCType={'register'} />
+
 			<Sidebar />
 			<div className='container w-full flex flex-col float-right ml-72'>
 				<Header />
