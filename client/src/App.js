@@ -7,7 +7,7 @@ function App() {
 	return (
 		<>
 			<Router>
-				<div className='container flex w-full max-w-none'>
+				<div className='container flex w-full max-w-none mx-auto'>
 					<AppRoutes />
 				</div>
 			</Router>
