@@ -7,9 +7,21 @@ const ButtonDelete = ({ text, url, icon, styles, click }) => {
 		action();
 	};
 
-	return (
+	const linkUrl = (
 		<Link
 			to={url}
+			className={`bg-darkRed hover:bg-darkRedHover px-6 py-2 rounded-full text-white flex items-center ${styles}`}>
+			{icon ? (
+				<span className='material-symbols-outlined mr-2'>{icon}</span>
+			) : (
+				''
+			)}
+			{text}
+		</Link>
+	);
+
+	const actionButton = (
+		<Link
 			onClick={(e) => executeClick(e, click)}
 			className={`bg-darkRed hover:bg-darkRedHover px-6 py-2 rounded-full text-white flex items-center ${styles}`}>
 			{icon ? (
@@ -20,6 +32,8 @@ const ButtonDelete = ({ text, url, icon, styles, click }) => {
 			{text}
 		</Link>
 	);
+
+	return <>{url ? linkUrl : actionButton}</>;
 };
 
 export default ButtonDelete;

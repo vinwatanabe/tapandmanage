@@ -19,7 +19,7 @@ const Inventory = () => {
 			<NFCModal NFCType={'read'} />
 
 			<Sidebar />
-			<div className='container w-full flex flex-col float-right ml-72'>
+			<div className='container w-full flex flex-col float-right ml-72 mx-auto'>
 				<Header />
 
 				<div className='pl-10 pr-10'>
