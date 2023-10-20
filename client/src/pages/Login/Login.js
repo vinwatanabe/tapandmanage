@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import HeaderHome from '../../components/HeaderHome';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
 import Footer from '../../components/Footer';
+import handleFormChange from '../../js/handleFormChange';
+import { Context } from '../../context/AuthContext';
 
 const Login = () => {
+	const { handleLogin } = useContext(Context);
+
+	const [values, setValues] = useState('');
+
 	return (
 		<>
 			<div className='w-full flex flex-col mx-auto'>
@@ -24,6 +30,7 @@ const Login = () => {
 									name='email'
 									placeholder='E-mail'
 									className='border border-borderGrey px-6 py-2 rounded-full w-full'
+									onChange={(e) => handleFormChange(e, values, setValues)}
 								/>
 							</div>
 
@@ -35,12 +42,17 @@ const Login = () => {
 									name='password'
 									placeholder='Password'
 									className='border border-borderGrey px-6 py-2 rounded-full w-full'
+									onChange={(e) => handleFormChange(e, values, setValues)}
 								/>
 							</div>
 						</form>
 
 						<div className='flex flex-row gap-5'>
-							<ButtonPrimary text={'Save'} url={'/inventory'} />
+							<ButtonPrimary
+								text={'Save'}
+								url={'/inventory'}
+								context={(e) => handleLogin(e, values)}
+							/>
 							<ButtonSecondary text={'Cancel'} url={'/'} />
 						</div>
 					</div>

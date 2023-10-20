@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import HeaderHome from '../../components/HeaderHome';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
 import Footer from '../../components/Footer';
+import handleFormChange from '../../js/handleFormChange';
+import { Context } from '../../context/AuthContext';
 
 const Register = () => {
+	const { handleRegister } = useContext(Context);
+
+	const [values, setValues] = useState('');
+
 	return (
 		<>
 			<div className='w-full flex flex-col mx-auto'>
@@ -18,24 +24,26 @@ const Register = () => {
 						<form className='flex flex-col gap-5 my-4'>
 							<div className='flex flex-row gap-5 justify-between'>
 								<div className='flex flex-col gap-2 w-full'>
-									<label htmlFor='first-name'>First name:</label>
+									<label htmlFor='firstName'>First name:</label>
 									<input
 										type='text'
-										id='first-name'
-										name='first-name'
+										id='firstName'
+										name='firstName'
 										placeholder='First name'
 										className='border border-borderGrey px-6 py-2 rounded-full w-full'
+										onChange={(e) => handleFormChange(e, values, setValues)}
 									/>
 								</div>
 
 								<div className='flex flex-col gap-2 w-full'>
-									<label htmlFor='last-name'>Last name:</label>
+									<label htmlFor='lastName'>Last name:</label>
 									<input
 										type='text'
-										id='last-name'
-										name='last-name'
+										id='lastName'
+										name='lastName'
 										placeholder='Last name'
 										className='border border-borderGrey px-6 py-2 rounded-full w-full'
+										onChange={(e) => handleFormChange(e, values, setValues)}
 									/>
 								</div>
 							</div>
@@ -49,6 +57,7 @@ const Register = () => {
 										name='company'
 										placeholder='Company'
 										className='border border-borderGrey px-6 py-2 rounded-full w-full'
+										onChange={(e) => handleFormChange(e, values, setValues)}
 									/>
 								</div>
 
@@ -60,6 +69,7 @@ const Register = () => {
 										name='position'
 										placeholder='Position'
 										className='border border-borderGrey px-6 py-2 rounded-full w-full'
+										onChange={(e) => handleFormChange(e, values, setValues)}
 									/>
 								</div>
 							</div>
@@ -73,6 +83,7 @@ const Register = () => {
 										name='email'
 										placeholder='E-mail'
 										className='border border-borderGrey px-6 py-2 rounded-full w-full'
+										onChange={(e) => handleFormChange(e, values, setValues)}
 									/>
 								</div>
 
@@ -84,13 +95,18 @@ const Register = () => {
 										name='password'
 										placeholder='Password'
 										className='border border-borderGrey px-6 py-2 rounded-full w-full'
+										onChange={(e) => handleFormChange(e, values, setValues)}
 									/>
 								</div>
 							</div>
 						</form>
 
 						<div className='flex flex-row gap-5'>
-							<ButtonPrimary text={'Save'} url={'/inventory'} />
+							<ButtonPrimary
+								text={'Save'}
+								url={'/inventory'}
+								context={(e) => handleRegister(e, values)}
+							/>
 							<ButtonSecondary text={'Cancel'} url={'/'} />
 						</div>
 					</div>

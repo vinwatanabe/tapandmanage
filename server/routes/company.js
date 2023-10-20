@@ -18,10 +18,14 @@ router.post('/register', async (req, res) => {
 		res.status(400).json({ msg: 'Company already exists' });
 	} else {
 		try {
-			const { companyName, email, password } = req.body;
+			let { firstName, lastName, company, position, email, password } =
+				req.body;
 
 			company = new Company({
-				companyName: companyName,
+				firstName: firstName,
+				lastName: lastName,
+				company: company,
+				position: position,
 				email: email,
 				password: password,
 			});
