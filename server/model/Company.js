@@ -26,6 +26,12 @@ const companySchema = new Schema({
 		type: String,
 		required: true,
 	},
+	groups: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Group',
+		},
+	],
 	createdAt: {
 		type: Date,
 		default: Date.now,
