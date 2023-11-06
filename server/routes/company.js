@@ -71,6 +71,7 @@ router.post('/register', async (req, res) => {
 // @desc    Delete company
 // @access  Private
 router.delete('/delete', Auth, async (req, res) => {
+	// Implement delete groups and items
 	try {
 		await Company.findByIdAndDelete(req.company.id);
 		res.json({ msg: 'Company deleted' });
