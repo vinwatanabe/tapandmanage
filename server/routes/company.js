@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const Company = require('../model/Company');
+const Group = require('../model/Group');
+const Item = require('../model/Item');
 const Auth = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -71,8 +73,9 @@ router.post('/register', async (req, res) => {
 // @desc    Delete company
 // @access  Private
 router.delete('/delete', Auth, async (req, res) => {
-	// Implement delete groups and items
 	try {
+		await Item.deleteMany({ company: req.company.id });
+		await Group.deleteMany({ company: req.company.id });
 		await Company.findByIdAndDelete(req.company.id);
 		res.json({ msg: 'Company deleted' });
 	} catch (error) {
