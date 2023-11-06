@@ -6,6 +6,16 @@ const groupSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	company: {
+		type: Schema.Types.ObjectId,
+		ref: 'Company',
+	},
+	items: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Item',
+		},
+	],
 	createdAt: {
 		type: Date,
 		default: Date.now,

@@ -15,6 +15,18 @@ const AddItemModal = () => {
 				<form className='mb-4 flex flex-col gap-5'>
 					<div className='flex flex-row gap-5 justify-between'>
 						<div className='flex flex-col gap-2 w-full'>
+							<label htmlFor='group-name'>Group name:</label>
+							<select
+								id='group-name'
+								name='group-name'
+								className='border border-borderGrey px-6 py-2 rounded-full w-full'>
+								<option value='storage'>Storage</option>
+								<option value='warehouse'>Warehouse</option>
+								<option value='freezer'>Freezer</option>
+							</select>
+						</div>
+
+						<div className='flex flex-col gap-2 w-full'>
 							<label htmlFor='item-type'>Item type:</label>
 							<select
 								id='item-type'

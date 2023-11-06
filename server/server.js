@@ -27,6 +27,7 @@ mongoose
 app.use('/company', require('./routes/company'));
 app.use('/auth', require('./routes/auth'));
 app.use('/group', require('./routes/group'));
+app.use('/item', require('./routes/item'));
 
 // Listen
 const PORT = process.env.PORT || 5000;

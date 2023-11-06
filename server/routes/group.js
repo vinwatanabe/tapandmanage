@@ -3,6 +3,7 @@ const express = require('express');
 const Auth = require('../middleware/authMiddleware');
 const Group = require('../model/Group');
 const Company = require('../model/Company');
+const Item = require('..//model/Item');
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.post('/new', Auth, async (req, res) => {
 		const { groupName } = req.body;
 
 		const group = new Group({
+			company: req.company.id,
 			groupName: groupName,
 		});
 
@@ -55,18 +57,12 @@ router.post('/new', Auth, async (req, res) => {
 // @desc    Edit group
 // @access  Private
 router.put('/edit/:id', Auth, async (req, res) => {
-	let groupExist = 0;
+	let group = await Group.find({ _id: req.params.id, company: req.company.id });
+	group = group[0];
 
-	let group = await Group.findById(req.params.id)
-		.then(() => {
-			groupExist = 1;
-		})
-		.catch((error) => {
-			res.status(404).json({ msg: 'Group does not exist' });
-			groupExist = 0;
-		});
-
-	if (groupExist === 1) {
+	if (!group) {
+		res.status(404).json({ msg: 'Group not found' });
+	} else {
 		try {
 			group = await Group.findByIdAndUpdate(
 				req.params.id,
@@ -113,27 +109,41 @@ router.get('/all', Auth, async (req, res) => {
 // @desc    Delete group
 // @access  Private
 router.delete('/delete/:id', Auth, async (req, res) => {
-	const group = await Group.findById(req.params.id);
+	let group = await Group.find({
+		_id: req.params.id,
+		company: req.company.id,
+	});
 
-	try {
-		const company = await Company.findById(req.company.id);
-		company.groups.pull(req.params.id);
-		await company.save().catch((error) => {
-			console.error(error.message);
-			res.status(500).json({ msg: 'Error deleting group from company list' });
-		});
+	group = group[0];
 
-		await Group.findByIdAndDelete(req.params.id)
-			.then(() => {
-				res.json({ msg: 'Group deleted' });
-			})
-			.catch((error) => {
+	if (!group) {
+		res.status(404).json({ msg: 'Group not found' });
+	} else {
+		try {
+			const company = await Company.findById(req.company.id);
+			company.groups.pull(req.params.id);
+			await company.save().catch((error) => {
 				console.error(error.message);
-				res.status(500).json({ msg: 'Error deleting group' });
+				res.status(500).json({ msg: 'Error deleting group from company list' });
 			});
-	} catch (error) {
-		console.error(error.message);
-		res.status(500).json({ msg: 'Server error' });
+
+			await Item.deleteMany({ group: req.params.id }).catch((error) => {
+				console.error(error.message);
+				res.status(500).json({ msg: 'Error deleting items from the group' });
+			});
+
+			await Group.findByIdAndDelete(req.params.id)
+				.then(() => {
+					res.json({ msg: 'Group deleted' });
+				})
+				.catch((error) => {
+					console.error(error.message);
+					res.status(500).json({ msg: 'Error deleting group' });
+				});
+		} catch (error) {
+			console.error(error.message);
+			res.status(500).json({ msg: 'Server error' });
+		}
 	}
 });
 
