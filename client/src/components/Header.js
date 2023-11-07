@@ -22,8 +22,6 @@ const Header = () => {
 		}
 	}, [userDataLoaded]);
 
-	console.log(userDataLoaded);
-
 	return (
 		<header className='flex flex-row bg-white h-20 w-full justify-end items-center'>
 			<div className='grid bg-background rounded-full w-[38px] h-[38px] place-content-center mr-5 border border-borderGrey'>

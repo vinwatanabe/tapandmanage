@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import GroupBox from '../../components/GroupBox';
@@ -9,8 +9,42 @@ import NFCModal from '../../components/NFCModal';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
 import { showGroupModal, showReadNFCModal } from '../../js/displayModal';
+import axios from 'axios';
 
 const Inventory = () => {
+	const effectActive = useRef(false);
+	const [groups, setGroups] = useState([]);
+
+	useEffect(() => {
+		if (effectActive.current === true) {
+			async function getGroups() {
+				const urlHandler = process.env.REACT_APP_URL_HANDLER;
+				const url = `${urlHandler}/group/all`;
+				const token = localStorage.getItem('token');
+				const config = {
+					headers: {
+						'Content-Type': 'application/json',
+						'x-auth-token': `${JSON.parse(token)}`,
+					},
+				};
+
+				await axios
+					.get(url, config)
+					.then((resp) => {
+						const allGroups = resp.data;
+						setGroups(allGroups);
+					})
+					.catch((error) => console.log(error));
+			}
+
+			getGroups();
+		}
+
+		return () => {
+			effectActive.current = true;
+		};
+	}, []);
+
 	return (
 		<>
 			<AddGroupModal />
@@ -38,8 +72,16 @@ const Inventory = () => {
 						</div>
 					</div>
 
-					<GroupBox groupName={'Freezer'} styles={'mb-8'} />
-					<GroupBox groupName={'Storage'} />
+					{groups.map((group, index) => {
+						return (
+							<GroupBox
+								groupName={group.groupName}
+								items={group.items}
+								styles={'mb-8'}
+								key={index}
+							/>
+						);
+					})}
 				</div>
 			</div>
 		</>

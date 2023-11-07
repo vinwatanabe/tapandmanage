@@ -96,8 +96,9 @@ router.put('/edit/:id', Auth, async (req, res) => {
 // @access  Private
 router.get('/all', Auth, async (req, res) => {
 	try {
-		const company = await Company.findById(req.company.id).populate('groups');
-		const groups = company.groups;
+		const groups = await Group.find({ company: req.company.id }).populate(
+			'items'
+		);
 		res.json(groups);
 	} catch (error) {
 		console.error(error.message);

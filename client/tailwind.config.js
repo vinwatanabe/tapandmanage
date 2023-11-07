@@ -23,6 +23,8 @@ module.exports = {
 			lightRed: '#FBECED',
 			darkRed: '#DC4444',
 			darkRedHover: '#E56262',
+			lightYellow: '#FFE8C1',
+			darkYellow: '#916D00',
 		},
 		extend: {
 			fontSize: {
