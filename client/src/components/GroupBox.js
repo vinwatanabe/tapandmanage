@@ -4,9 +4,57 @@ import ButtonPrimary from '../components/ButtonPrimary';
 import Pagination from './Pagination';
 import { showAddItemModal, showEditGroupModal } from '../js/displayModal';
 
-const GroupBox = ({ groupName, styles }) => {
+const GroupBox = ({ groupName, items, styles, groupKey }) => {
+	const formatDate = (d) => {
+		const date = new Date(d.split('T')[0].replace('-', '/'));
+		const finalDate = `${
+			date.getMonth() + 1
+		}/${date.getDate()}/${date.getFullYear()}`;
+
+		return finalDate;
+	};
+
+	const getItemStatus = (itemStatus) => {
+		switch (itemStatus) {
+			case 'In Stock':
+				return (
+					<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
+						{itemStatus}
+					</p>
+				);
+
+			case 'Out of Stock':
+				return (
+					<p className='my-1 basis-1/12 bg-lightRed text-darkRed py-1 rounded-full'>
+						{itemStatus}
+					</p>
+				);
+
+			case 'Low Stock':
+				return (
+					<p className='my-1 basis-1/12 bg-lightYellow text-darkYellow py-1 rounded-full'>
+						{itemStatus}
+					</p>
+				);
+
+			case 'Expired':
+				return (
+					<p className='my-1 basis-1/12 bg-darkRed text-lightRed py-1 rounded-full'>
+						{itemStatus}
+					</p>
+				);
+
+			default:
+				return (
+					<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
+						{itemStatus}
+					</p>
+				);
+		}
+	};
+
 	return (
-		<div className={`bg-white p-8 rounded-lg mb-8 ${styles}`}>
+		<div className={`bg-white p-8 rounded-lg mb-8 ${styles}`} key={groupKey}>
 			<div className='flex flex-row items-center justify-between mb-5'>
 				<div className='flex flex-row gap-x-2'>
 					<p className='font-bold'>{groupName}</p>
@@ -39,100 +87,38 @@ const GroupBox = ({ groupName, styles }) => {
 				<hr className='text-borderGrey' />
 			</div>
 
-			<div>
-				<Link to={'/item-details'}>
-					<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
-						<p className='my-1 basis-1/12 text-left'>CF123456</p>
-						<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
-						<p className='my-1 basis-1/12'>13 Unts</p>
-						<p className='my-1 basis-1/12'>$12.50</p>
-						<p className='my-1 basis-1/12'>$30.00</p>
-						<p className='my-1 basis-1/12 font-bold'>59.6%</p>
-						<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-							In Stock
-						</p>
-						<p className='my-1 basis-1/12'>12/11/2023</p>
+			{items.map((item, index) => {
+				return (
+					<div key={index}>
+						<Link to={'/item-details'}>
+							<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
+								<p className='my-1 basis-1/12 text-left'>{item.SKU}</p>
+								<p className='my-1 basis-1/3 text-left'>{item.itemName}</p>
+								<p className='my-1 basis-1/12'>
+									{item.units + ' ' + item.measure}
+								</p>
+								<p className='my-1 basis-1/12'>${item.cost}</p>
+								<p className='my-1 basis-1/12'>${item.sellingPrice}</p>
+								<p className='my-1 basis-1/12 font-bold'>
+									{(
+										((item.sellingPrice - item.cost) * 100) /
+										item.sellingPrice
+									).toFixed(1)}
+									%
+								</p>
+
+								{getItemStatus(item.status)}
+
+								<p className='my-1 basis-1/12'>
+									{formatDate(item.expirationDate)}
+								</p>
+							</div>
+						</Link>
+
+						<hr className='text-borderGrey' />
 					</div>
-				</Link>
-
-				<hr className='text-borderGrey' />
-			</div>
-
-			<div>
-				<Link to={'/item-details'}>
-					<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
-						<p className='my-1 basis-1/12 text-left'>CF123456</p>
-						<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
-						<p className='my-1 basis-1/12'>13 Unts</p>
-						<p className='my-1 basis-1/12'>$12.50</p>
-						<p className='my-1 basis-1/12'>$30.00</p>
-						<p className='my-1 basis-1/12 font-bold'>59.6%</p>
-						<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-							In Stock
-						</p>
-						<p className='my-1 basis-1/12'>12/11/2023</p>
-					</div>
-				</Link>
-
-				<hr className='text-borderGrey' />
-			</div>
-
-			<div>
-				<Link to={'/item-details'}>
-					<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
-						<p className='my-1 basis-1/12 text-left'>CF123456</p>
-						<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
-						<p className='my-1 basis-1/12'>13 Unts</p>
-						<p className='my-1 basis-1/12'>$12.50</p>
-						<p className='my-1 basis-1/12'>$30.00</p>
-						<p className='my-1 basis-1/12 font-bold'>59.6%</p>
-						<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-							In Stock
-						</p>
-						<p className='my-1 basis-1/12'>12/11/2023</p>
-					</div>
-				</Link>
-
-				<hr className='text-borderGrey' />
-			</div>
-
-			<div>
-				<Link to={'/item-details'}>
-					<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
-						<p className='my-1 basis-1/12 text-left'>CF123456</p>
-						<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
-						<p className='my-1 basis-1/12'>13 Unts</p>
-						<p className='my-1 basis-1/12'>$12.50</p>
-						<p className='my-1 basis-1/12'>$30.00</p>
-						<p className='my-1 basis-1/12 font-bold'>59.6%</p>
-						<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-							In Stock
-						</p>
-						<p className='my-1 basis-1/12'>12/11/2023</p>
-					</div>
-				</Link>
-
-				<hr className='text-borderGrey' />
-			</div>
-
-			<div>
-				<Link to={'/item-details'}>
-					<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
-						<p className='my-1 basis-1/12 text-left'>CF123456</p>
-						<p className='my-1 basis-1/3 text-left'>Cheese Pizza</p>
-						<p className='my-1 basis-1/12'>13 Unts</p>
-						<p className='my-1 basis-1/12'>$12.50</p>
-						<p className='my-1 basis-1/12'>$30.00</p>
-						<p className='my-1 basis-1/12 font-bold'>59.6%</p>
-						<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-							In Stock
-						</p>
-						<p className='my-1 basis-1/12'>12/11/2023</p>
-					</div>
-				</Link>
-
-				<hr className='text-borderGrey' />
-			</div>
+				);
+			})}
 
 			<Pagination />
 		</div>
