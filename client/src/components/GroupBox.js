@@ -2,57 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ButtonPrimary from '../components/ButtonPrimary';
 import Pagination from './Pagination';
+import ItemStatus from './ItemStatus';
 import { showAddItemModal, showEditGroupModal } from '../js/displayModal';
+import formatDate from '../js/formatDate';
 
 const GroupBox = ({ groupName, items, styles, groupKey }) => {
-	const formatDate = (d) => {
-		const date = new Date(d.split('T')[0].replace('-', '/'));
-		const finalDate = `${
-			date.getMonth() + 1
-		}/${date.getDate()}/${date.getFullYear()}`;
-
-		return finalDate;
-	};
-
-	const getItemStatus = (itemStatus) => {
-		switch (itemStatus) {
-			case 'In Stock':
-				return (
-					<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-						{itemStatus}
-					</p>
-				);
-
-			case 'Out of Stock':
-				return (
-					<p className='my-1 basis-1/12 bg-lightRed text-darkRed py-1 rounded-full'>
-						{itemStatus}
-					</p>
-				);
-
-			case 'Low Stock':
-				return (
-					<p className='my-1 basis-1/12 bg-lightYellow text-darkYellow py-1 rounded-full'>
-						{itemStatus}
-					</p>
-				);
-
-			case 'Expired':
-				return (
-					<p className='my-1 basis-1/12 bg-darkRed text-lightRed py-1 rounded-full'>
-						{itemStatus}
-					</p>
-				);
-
-			default:
-				return (
-					<p className='my-1 basis-1/12 bg-lightGreen text-darkGreen py-1 rounded-full'>
-						{itemStatus}
-					</p>
-				);
-		}
-	};
-
 	return (
 		<div className={`bg-white p-8 rounded-lg mb-8 ${styles}`} key={groupKey}>
 			<div className='flex flex-row items-center justify-between mb-5'>
@@ -90,7 +44,7 @@ const GroupBox = ({ groupName, items, styles, groupKey }) => {
 			{items.map((item, index) => {
 				return (
 					<div key={index}>
-						<Link to={'/item-details'}>
+						<Link to={`/item-details/${item._id}`}>
 							<div className='flex flex-row justify-between text-center my-2 text-text-sm items-center hover:text-lightBlue'>
 								<p className='my-1 basis-1/12 text-left'>{item.SKU}</p>
 								<p className='my-1 basis-1/3 text-left'>{item.itemName}</p>
@@ -107,7 +61,7 @@ const GroupBox = ({ groupName, items, styles, groupKey }) => {
 									%
 								</p>
 
-								{getItemStatus(item.status)}
+								<ItemStatus status={item.status} />
 
 								<p className='my-1 basis-1/12'>
 									{formatDate(item.expirationDate)}

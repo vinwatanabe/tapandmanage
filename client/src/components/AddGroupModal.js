@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import ButtonPrimary from '../components/ButtonPrimary';
 import ButtonSecondary from '../components/ButtonSecondary';
 import { hideGroupModal } from '../js/displayModal';
+import handleFormChange from '../js/handleFormChange';
+import { Context } from '../context/AuthContext';
 
 const AddGroupModal = () => {
+	const [values, setValues] = useState('');
+	const { handleAddGroup } = useContext(Context);
+
 	return (
 		<div
 			id='addGroupModal'
@@ -14,19 +19,24 @@ const AddGroupModal = () => {
 
 				<form className='mb-4'>
 					<div className='flex flex-col gap-2'>
-						<label htmlFor='group-name'>Group name:</label>
+						<label htmlFor='groupName'>Group name:</label>
 						<input
 							type='text'
-							id='group-name'
-							name='group-name'
+							id='groupName'
+							name='groupName'
 							placeholder='Type the group name'
 							className='border border-borderGrey px-6 py-2 rounded-full w-full'
+							onChange={(e) => handleFormChange(e, values, setValues)}
 						/>
 					</div>
 				</form>
 
 				<div className='flex flex-row justify-end gap-3'>
-					<ButtonPrimary text={'Save'} click={hideGroupModal} />
+					<ButtonPrimary
+						text={'Save'}
+						context={(e) => handleAddGroup(e, values)}
+						url={'/inventory'}
+					/>
 					<ButtonSecondary text={'Cancel'} click={hideGroupModal} />
 				</div>
 			</div>

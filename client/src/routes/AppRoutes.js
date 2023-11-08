@@ -49,7 +49,7 @@ const AppRoutes = () => {
 				}
 			/>
 			<Route
-				path='/item-details'
+				path='/item-details/:id'
 				element={
 					<ProtectedRoute>
 						<ItemDetails />

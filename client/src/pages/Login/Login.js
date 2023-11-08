@@ -49,7 +49,7 @@ const Login = () => {
 
 						<div className='flex flex-row gap-5'>
 							<ButtonPrimary
-								text={'Save'}
+								text={'Login'}
 								url={'/inventory'}
 								context={(e) => handleLogin(e, values)}
 							/>

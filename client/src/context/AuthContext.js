@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { hideGroupModal } from '../js/displayModal';
 
 const Context = createContext();
 
@@ -26,7 +27,7 @@ function AuthContext({ children }) {
 	async function handleRegister(event, values) {
 		event.preventDefault();
 
-		const url = 'http://localhost:5000/company/register';
+		const url = `${process.env.REACT_APP_URL_HANDLER}/company/register`;
 		const config = {
 			headers: {
 				'Content-Type': 'application/json',
@@ -62,7 +63,7 @@ function AuthContext({ children }) {
 	async function handleLogin(event, values) {
 		event.preventDefault();
 
-		const url = 'http://localhost:5000/auth/login';
+		const url = `${process.env.REACT_APP_URL_HANDLER}/auth/login`;
 		const config = {
 			headers: {
 				'Content-Type': 'application/json',
@@ -96,7 +97,7 @@ function AuthContext({ children }) {
 
 	// Get user data
 	async function getUserData(token) {
-		const url = 'http://localhost:5000/auth/company';
+		const url = `${process.env.REACT_APP_URL_HANDLER}/auth/company`;
 
 		const config = {
 			headers: {
@@ -140,6 +141,30 @@ function AuthContext({ children }) {
 		return navigate('/');
 	}
 
+	// Handle AddGroup
+	async function handleAddGroup(event, values) {
+		event.preventDefault();
+
+		const url = `${process.env.REACT_APP_URL_HANDLER}/group/new`;
+		const token = localStorage.getItem('token');
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-auth-token': `${JSON.parse(token)}`,
+			},
+		};
+
+		await axios
+			.post(url, values, config)
+			.then(() => {
+				hideGroupModal();
+				return navigate(0);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
 	return (
 		<Context.Provider
 			value={{
@@ -153,6 +178,7 @@ function AuthContext({ children }) {
 				handleRegister,
 				handleLogin,
 				handleLogout,
+				handleAddGroup,
 			}}>
 			{children}
 		</Context.Provider>
