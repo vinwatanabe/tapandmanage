@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
@@ -7,8 +8,43 @@ import RegisterNFCModal from '../../components/RegisterNFCModal';
 import NFCModal from '../../components/NFCModal';
 import EditItemModal from '../../components/EditItemModal';
 import { showEditItemModal } from '../../js/displayModal';
+import axios from 'axios';
 
 const ItemDetails = () => {
+	const params = useParams().id;
+	const effectActive = useRef(false);
+	const [item, setItem] = useState({});
+
+	useEffect(() => {
+		if (effectActive.current === true) {
+			async function getItem() {
+				const urlHandler = process.env.REACT_APP_URL_HANDLER;
+				const url = `${urlHandler}/item/${params}`;
+				const token = localStorage.getItem('token');
+				const config = {
+					headers: {
+						'Content-Type': 'application/json',
+						'x-auth-token': `${JSON.parse(token)}`,
+					},
+				};
+
+				await axios
+					.get(url, config)
+					.then((resp) => {
+						const itemResponse = resp.data;
+						setItem(itemResponse[0]);
+					})
+					.catch((error) => console.log(error));
+			}
+
+			getItem();
+		}
+
+		return () => {
+			effectActive.current = true;
+		};
+	}, [params]);
+
 	return (
 		<>
 			<EditItemModal />
@@ -34,7 +70,7 @@ const ItemDetails = () => {
 						</div>
 					</div>
 
-					<ItemDetailsBox groupName={'Cheddar Cheese - Cracker Barrel'} />
+					<ItemDetailsBox item={item} />
 				</div>
 			</div>
 		</>
