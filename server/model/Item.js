@@ -38,7 +38,7 @@ const itemSchema = new Schema({
 	},
 	expirationDate: {
 		type: Date,
-		required: true,
+		required: false,
 	},
 	cost: {
 		type: Number,

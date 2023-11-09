@@ -138,7 +138,7 @@ router.get('/:id', Auth, async (req, res) => {
 		const item = await Item.find({
 			_id: req.params.id,
 			company: req.company.id,
-		});
+		}).populate('group');
 
 		if (!item[0]) {
 			res.status(404).json({ msg: 'Item not found' });
