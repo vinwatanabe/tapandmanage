@@ -1,7 +1,12 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { hideGroupModal } from '../js/displayModal';
+import {
+	hideGroupModal,
+	hideEditItemModal,
+	hideAddItemModal,
+	hideEditGroupModal,
+} from '../js/displayModal';
 
 const Context = createContext();
 
@@ -165,6 +170,128 @@ function AuthContext({ children }) {
 			});
 	}
 
+	// Handle EditGroup
+	const [editGroupInfo, setEditGroupInfo] = useState({});
+
+	async function handleEditGroup(event, values, groupId) {
+		event.preventDefault();
+
+		const url = `${process.env.REACT_APP_URL_HANDLER}/group/edit/${groupId}`;
+		const token = localStorage.getItem('token');
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-auth-token': `${JSON.parse(token)}`,
+			},
+		};
+
+		await axios
+			.put(url, values, config)
+			.then(() => {
+				hideEditGroupModal();
+				return navigate(0);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
+	// Handle DeleteGroup
+	async function handleDeleteGroup(event, groupId) {
+		event.preventDefault();
+
+		const url = `${process.env.REACT_APP_URL_HANDLER}/group/delete/${groupId}`;
+		const token = localStorage.getItem('token');
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-auth-token': `${JSON.parse(token)}`,
+			},
+		};
+
+		await axios
+			.delete(url, config)
+			.then(() => {
+				hideEditGroupModal();
+				return navigate(0);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
+	// Handle AddItem
+	async function handleAddItem(event, values) {
+		event.preventDefault();
+
+		const url = `${process.env.REACT_APP_URL_HANDLER}/item/new`;
+		const token = localStorage.getItem('token');
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-auth-token': `${JSON.parse(token)}`,
+			},
+		};
+
+		await axios
+			.post(url, values, config)
+			.then(() => {
+				hideAddItemModal();
+				return navigate(0);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
+	// Handle EditItem
+	async function handleEditItem(event, values, itemId) {
+		event.preventDefault();
+
+		const url = `${process.env.REACT_APP_URL_HANDLER}/item/edit/${itemId}`;
+		const token = localStorage.getItem('token');
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-auth-token': `${JSON.parse(token)}`,
+			},
+		};
+
+		await axios
+			.put(url, values, config)
+			.then(() => {
+				hideEditItemModal();
+				return navigate(0);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
+	// Handle DeleteItem
+	async function handleDeleteItem(event, itemId) {
+		event.preventDefault();
+
+		const url = `${process.env.REACT_APP_URL_HANDLER}/item/delete/${itemId}`;
+		const token = localStorage.getItem('token');
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-auth-token': `${JSON.parse(token)}`,
+			},
+		};
+
+		await axios
+			.delete(url, config)
+			.then(() => {
+				hideEditItemModal();
+				return navigate('/inventory');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
 	return (
 		<Context.Provider
 			value={{
@@ -179,6 +306,13 @@ function AuthContext({ children }) {
 				handleLogin,
 				handleLogout,
 				handleAddGroup,
+				handleAddItem,
+				editGroupInfo,
+				setEditGroupInfo,
+				handleEditGroup,
+				handleDeleteGroup,
+				handleEditItem,
+				handleDeleteItem,
 			}}>
 			{children}
 		</Context.Provider>

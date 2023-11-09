@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ButtonPrimary from '../components/ButtonPrimary';
 import Pagination from './Pagination';
 import ItemStatus from './ItemStatus';
 import { showAddItemModal, showEditGroupModal } from '../js/displayModal';
 import formatDate from '../js/formatDate';
+import { Context } from '../context/AuthContext';
 
-const GroupBox = ({ groupName, items, styles, groupKey }) => {
+const GroupBox = ({ groupId, groupName, items, styles, groupKey }) => {
+	const { setEditGroupInfo } = useContext(Context);
+
+	function getGroupId(event, id, name) {
+		event.preventDefault();
+
+		const groupEdit = {
+			id: id,
+			groupName: name,
+		};
+
+		setEditGroupInfo(groupEdit);
+	}
+
 	return (
 		<div className={`bg-white p-8 rounded-lg mb-8 ${styles}`} key={groupKey}>
 			<div className='flex flex-row items-center justify-between mb-5'>
 				<div className='flex flex-row gap-x-2'>
 					<p className='font-bold'>{groupName}</p>
-					<Link onClick={(e) => showEditGroupModal(e)}>
+					<Link
+						onClick={(e) => {
+							showEditGroupModal(e);
+							getGroupId(e, groupId, groupName);
+						}}>
 						<span className='material-symbols-outlined text-detailGrey hover:text-mediumGrey'>
 							edit_square
 						</span>

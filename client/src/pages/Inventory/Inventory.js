@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import GroupBox from '../../components/GroupBox';
@@ -10,8 +10,10 @@ import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
 import { showGroupModal, showReadNFCModal } from '../../js/displayModal';
 import axios from 'axios';
+import { Context } from '../../context/AuthContext';
 
 const Inventory = () => {
+	const { editGroupInfo } = useContext(Context);
 	const effectActive = useRef(false);
 	const [groups, setGroups] = useState([]);
 
@@ -48,8 +50,8 @@ const Inventory = () => {
 	return (
 		<>
 			<AddGroupModal />
-			<AddItemModal />
-			<EditGroupModal />
+			<AddItemModal groups={groups} />
+			<EditGroupModal groupInfo={editGroupInfo} />
 			<NFCModal NFCType={'read'} />
 
 			<Sidebar />
@@ -75,6 +77,7 @@ const Inventory = () => {
 					{groups.map((group, index) => {
 						return (
 							<GroupBox
+								groupId={group._id}
 								groupName={group.groupName}
 								items={group.items}
 								styles={'mb-8'}

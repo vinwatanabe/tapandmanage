@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import ButtonPrimary from '../components/ButtonPrimary';
 import ButtonSecondary from '../components/ButtonSecondary';
 import { hideAddItemModal } from '../js/displayModal';
+import handleFormChange from '../js/handleFormChange';
+import { Context } from '../context/AuthContext';
 
-const AddItemModal = () => {
+const AddItemModal = ({ groups }) => {
+	const [values, setValues] = useState('');
+	const { handleAddItem } = useContext(Context);
+
 	return (
 		<div
 			id='addItemModal'
@@ -15,36 +20,45 @@ const AddItemModal = () => {
 				<form className='mb-4 flex flex-col gap-5'>
 					<div className='flex flex-row gap-5 justify-between'>
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='group-name'>Group name:</label>
+							<label htmlFor='groupName'>Group name:</label>
 							<select
-								id='group-name'
-								name='group-name'
-								className='border border-borderGrey px-6 py-2 rounded-full w-full'>
-								<option value='storage'>Storage</option>
-								<option value='warehouse'>Warehouse</option>
-								<option value='freezer'>Freezer</option>
+								id='groupName'
+								name='groupName'
+								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}>
+								<option value='blank'></option>
+								{groups.map((group, index) => {
+									return (
+										<option key={index} value={group.groupName}>
+											{group.groupName}
+										</option>
+									);
+								})}
 							</select>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='item-type'>Item type:</label>
+							<label htmlFor='itemType'>Item type:</label>
 							<select
-								id='item-type'
-								name='item-type'
-								className='border border-borderGrey px-6 py-2 rounded-full w-full'>
-								<option value='final-product'>Final product</option>
-								<option value='item'>Item</option>
+								id='itemType'
+								name='itemType'
+								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}>
+								<option value='blank'></option>
+								<option value='Item'>Item</option>
+								<option value='Final product'>Final product</option>
 							</select>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='sku'>SKU:</label>
+							<label htmlFor='SKU'>SKU:</label>
 							<input
 								type='text'
-								id='sku'
-								name='sku'
+								id='SKU'
+								name='SKU'
 								placeholder='Type product SKU'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
@@ -56,62 +70,68 @@ const AddItemModal = () => {
 								name='barcode'
 								placeholder='Type item bar code'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 					</div>
 
 					<div className='flex flex-row gap-5 justify-between'>
 						<div className='flex flex-col gap-2 w-full basis-2/3'>
-							<label htmlFor='item-name'>Item name:</label>
+							<label htmlFor='itemName'>Item name:</label>
 							<input
 								type='text'
-								id='item-name'
-								name='item-name'
+								id='itemName'
+								name='itemName'
 								placeholder='Type item name'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full basis-1/3'>
-							<label htmlFor='brand'>Brand:</label>
+							<label htmlFor='brandName'>Brand:</label>
 							<input
 								type='text'
-								id='brand'
-								name='brand'
+								id='brandName'
+								name='brandName'
 								placeholder='Type product brand'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 					</div>
 
 					<div className='flex flex-row gap-5 justify-between'>
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='stock-date'>Stock date:</label>
+							<label htmlFor='stockDate'>Stock date:</label>
 							<input
 								type='date'
-								id='stock-date'
-								name='stock-date'
+								id='stockDate'
+								name='stockDate'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='stock-release'>Stock release:</label>
+							<label htmlFor='stockRelease'>Stock release:</label>
 							<input
 								type='date'
-								id='stock-release'
-								name='stock-release'
+								id='stockRelease'
+								name='stockRelease'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='expiration-date'>Expiration date:</label>
+							<label htmlFor='expirationDate'>Expiration date:</label>
 							<input
 								type='date'
-								id='expiration-date'
-								name='expiration-date'
+								id='expirationDate'
+								name='expirationDate'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 					</div>
@@ -125,17 +145,19 @@ const AddItemModal = () => {
 								name='cost'
 								placeholder='Item cost'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='selling-price'>Selling price:</label>
+							<label htmlFor='sellingPrice'>Selling price:</label>
 							<input
 								type='text'
-								id='selling-price'
-								name='selling-price'
+								id='sellingPrice'
+								name='sellingPrice'
 								placeholder='Item selling price'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
@@ -144,11 +166,13 @@ const AddItemModal = () => {
 							<select
 								id='status'
 								name='status'
-								className='border border-borderGrey px-6 py-2 rounded-full w-full'>
-								<option value='in-stock'>In Stock</option>
-								<option value='low-stock'>Low Stock</option>
-								<option value='out-of-stock'>Out of Stock</option>
-								<option value='expired'>Expired</option>
+								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}>
+								<option value='blank'></option>
+								<option value='In Stock'>In Stock</option>
+								<option value='Low Stock'>Low Stock</option>
+								<option value='Out of Stock'>Out of Stock</option>
+								<option value='Expired'>Expired</option>
 							</select>
 						</div>
 					</div>
@@ -162,6 +186,7 @@ const AddItemModal = () => {
 								name='units'
 								placeholder='Item units'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
@@ -170,41 +195,49 @@ const AddItemModal = () => {
 							<select
 								id='measure'
 								name='measure'
-								className='border border-borderGrey px-6 py-2 rounded-full w-full'>
-								<option value='units'>Units</option>
-								<option value='kilograms'>Kilograms</option>
-								<option value='ounces'>Ounces</option>
-								<option value='pounds'>Pounds</option>
+								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}>
+								<option value='blank'></option>
+								<option value='Units'>Units</option>
+								<option value='Kilograms'>Kilograms</option>
+								<option value='Ounces'>Ounces</option>
+								<option value='Pounds'>Pounds</option>
 							</select>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='minimum-amount'>Minimum amount:</label>
+							<label htmlFor='minimumAmount'>Minimum amount:</label>
 							<input
 								type='number'
-								id='minimum-amount'
-								name='minimum-amount'
+								id='minimumAmount'
+								name='minimumAmount'
 								placeholder='Item selling price'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 					</div>
 
 					<div className='flex flex-row gap-5 justify-between'>
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='item-details'>Item details:</label>
+							<label htmlFor='itemDetails'>Item details:</label>
 							<textarea
-								id='item-details'
-								name='item-details'
-								placeholder='Item units'
+								id='itemDetails'
+								name='itemDetails'
+								placeholder='Item details'
 								className='border border-borderGrey px-6 py-2 rounded-lg w-full h-32'
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 					</div>
 				</form>
 
 				<div className='flex flex-row justify-end gap-3'>
-					<ButtonPrimary text={'Save'} click={hideAddItemModal} />
+					<ButtonPrimary
+						text={'Save'}
+						context={(e) => handleAddItem(e, values)}
+						url={'/inventory'}
+					/>
 					<ButtonSecondary text={'Cancel'} click={hideAddItemModal} />
 				</div>
 			</div>

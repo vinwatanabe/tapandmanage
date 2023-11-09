@@ -1,10 +1,69 @@
-import React from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import ButtonPrimary from '../components/ButtonPrimary';
 import ButtonSecondary from '../components/ButtonSecondary';
 import { hideEditItemModal } from '../js/displayModal';
 import ButtonDelete from './ButtonDelete';
+import axios from 'axios';
+import handleFormChange from '../js/handleFormChange';
+import { Context } from '../context/AuthContext';
+import formatDateDash from '../js/formatDateDash';
 
-const EditItemModal = () => {
+const EditItemModal = ({ groupName, itemInfo }) => {
+	const [values, setValues] = useState('');
+	const [groups, setGroups] = useState([]);
+	const { handleEditItem, handleDeleteItem } = useContext(Context);
+	const effectActive = useRef(false);
+
+	useEffect(() => {
+		if (effectActive.current === true) {
+			async function getGroups() {
+				const urlHandler = process.env.REACT_APP_URL_HANDLER;
+				const url = `${urlHandler}/group/all`;
+				const token = localStorage.getItem('token');
+				const config = {
+					headers: {
+						'Content-Type': 'application/json',
+						'x-auth-token': `${JSON.parse(token)}`,
+					},
+				};
+
+				await axios
+					.get(url, config)
+					.then((resp) => {
+						setGroups(resp.data);
+					})
+					.catch((error) => console.log(error));
+			}
+
+			getGroups();
+		}
+
+		const item = {
+			groupName: groupName,
+			itemType: itemInfo.itemType,
+			SKU: itemInfo.SKU,
+			barcode: itemInfo.barcode,
+			itemName: itemInfo.itemName,
+			brandName: itemInfo.brandName,
+			stockDate: formatDateDash(itemInfo.stockDate),
+			stockRelease: formatDateDash(itemInfo.stockRelease),
+			expirationDate: formatDateDash(itemInfo.expirationDate),
+			cost: itemInfo.cost,
+			sellingPrice: itemInfo.sellingPrice,
+			status: itemInfo.status,
+			units: itemInfo.units,
+			measure: itemInfo.measure,
+			minimumAmount: itemInfo.minimumAmount,
+			itemDetails: itemInfo.itemDetails,
+		};
+
+		setValues(item);
+
+		return () => {
+			effectActive.current = true;
+		};
+	}, [groupName, itemInfo]);
+
 	return (
 		<div
 			id='editItemModal'
@@ -16,24 +75,48 @@ const EditItemModal = () => {
 				<form className='mb-4 flex flex-col gap-5'>
 					<div className='flex flex-row gap-5 justify-between'>
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='item-type'>Item type:</label>
+							<label htmlFor='groupName'>Group name:</label>
 							<select
-								id='item-type'
-								name='item-type'
-								className='border border-borderGrey px-6 py-2 rounded-full w-full'>
-								<option value='final-product'>Final product</option>
-								<option value='item'>Item</option>
+								id='groupName'
+								name='groupName'
+								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}>
+								<option value={values.groupName || ''}>
+									{values.groupName}
+								</option>
+								{groups.map((g, index) => {
+									return (
+										<option key={index} value={g.groupName}>
+											{g.groupName}
+										</option>
+									);
+								})}
 							</select>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='sku'>SKU:</label>
+							<label htmlFor='itemType'>Item type:</label>
+							<select
+								id='itemType'
+								name='itemType'
+								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}>
+								<option value={values.itemType}>{values.itemType}</option>
+								<option value='Item'>Item</option>
+								<option value='Final product'>Final product</option>
+							</select>
+						</div>
+
+						<div className='flex flex-col gap-2 w-full'>
+							<label htmlFor='SKU'>SKU:</label>
 							<input
 								type='text'
-								id='sku'
-								name='sku'
+								id='SKU'
+								name='SKU'
 								placeholder='Type product SKU'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								value={values.SKU || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
@@ -45,62 +128,74 @@ const EditItemModal = () => {
 								name='barcode'
 								placeholder='Type item bar code'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								value={values.barcode || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 					</div>
 
 					<div className='flex flex-row gap-5 justify-between'>
 						<div className='flex flex-col gap-2 w-full basis-2/3'>
-							<label htmlFor='item-name'>Item name:</label>
+							<label htmlFor='itemName'>Item name:</label>
 							<input
 								type='text'
-								id='item-name'
-								name='item-name'
+								id='itemName'
+								name='itemName'
 								placeholder='Type item name'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								value={values.itemName || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full basis-1/3'>
-							<label htmlFor='brand'>Brand:</label>
+							<label htmlFor='brandName'>Brand:</label>
 							<input
 								type='text'
-								id='brand'
-								name='brand'
+								id='brandName'
+								name='brandName'
 								placeholder='Type product brand'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								value={values.brandName || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 					</div>
 
 					<div className='flex flex-row gap-5 justify-between'>
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='stock-date'>Stock date:</label>
+							<label htmlFor='stockDate'>Stock date:</label>
 							<input
 								type='date'
-								id='stock-date'
-								name='stock-date'
+								id='stockDate'
+								name='stockDate'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								value={values.stockDate || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='stock-release'>Stock release:</label>
+							<label htmlFor='stockRelease'>Stock release:</label>
 							<input
 								type='date'
-								id='stock-release'
-								name='stock-release'
+								id='stockRelease'
+								name='stockRelease'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								value={values.stockRelease || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='expiration-date'>Expiration date:</label>
+							<label htmlFor='expirationDate'>Expiration date:</label>
 							<input
 								type='date'
-								id='expiration-date'
-								name='expiration-date'
+								id='expirationDate'
+								name='expirationDate'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								value={values.expirationDate || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 					</div>
@@ -114,17 +209,21 @@ const EditItemModal = () => {
 								name='cost'
 								placeholder='Item cost'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								value={values.cost || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='selling-price'>Selling price:</label>
+							<label htmlFor='sellingPrice'>Selling price:</label>
 							<input
 								type='text'
-								id='selling-price'
-								name='selling-price'
+								id='sellingPrice'
+								name='sellingPrice'
 								placeholder='Item selling price'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								value={values.sellingPrice || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
@@ -133,11 +232,13 @@ const EditItemModal = () => {
 							<select
 								id='status'
 								name='status'
-								className='border border-borderGrey px-6 py-2 rounded-full w-full'>
-								<option value='in-stock'>In Stock</option>
-								<option value='low-stock'>Low Stock</option>
-								<option value='out-of-stock'>Out of Stock</option>
-								<option value='expired'>Expired</option>
+								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}>
+								<option value={values.status || ''}>{values.status}</option>
+								<option value='In Stock'>In Stock</option>
+								<option value='Low Stock'>Low Stock</option>
+								<option value='Out of Stock'>Out of Stock</option>
+								<option value='Expired'>Expired</option>
 							</select>
 						</div>
 					</div>
@@ -151,6 +252,8 @@ const EditItemModal = () => {
 								name='units'
 								placeholder='Item units'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								value={values.units || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 
@@ -159,34 +262,40 @@ const EditItemModal = () => {
 							<select
 								id='measure'
 								name='measure'
-								className='border border-borderGrey px-6 py-2 rounded-full w-full'>
-								<option value='units'>Units</option>
-								<option value='kilograms'>Kilograms</option>
-								<option value='ounces'>Ounces</option>
-								<option value='pounds'>Pounds</option>
+								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								onChange={(e) => handleFormChange(e, values, setValues)}>
+								<option value={values.measure || ''}>{values.measure}</option>
+								<option value='Units'>Units</option>
+								<option value='Kilograms'>Kilograms</option>
+								<option value='Ounces'>Ounces</option>
+								<option value='Pounds'>Pounds</option>
 							</select>
 						</div>
 
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='minimum-amount'>Minimum amount:</label>
+							<label htmlFor='minimumAmount'>Minimum amount:</label>
 							<input
 								type='number'
-								id='minimum-amount'
-								name='minimum-amount'
+								id='minimumAmount'
+								name='minimumAmount'
 								placeholder='Item selling price'
 								className='border border-borderGrey px-6 py-2 rounded-full w-full'
+								value={values.minimumAmount || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 					</div>
 
 					<div className='flex flex-row gap-5 justify-between'>
 						<div className='flex flex-col gap-2 w-full'>
-							<label htmlFor='item-details'>Item details:</label>
+							<label htmlFor='itemDetails'>Item details:</label>
 							<textarea
-								id='item-details'
-								name='item-details'
-								placeholder='Item units'
+								id='itemDetails'
+								name='itemDetails'
+								placeholder='Item details'
 								className='border border-borderGrey px-6 py-2 rounded-lg w-full h-32'
+								value={values.itemDetails || ''}
+								onChange={(e) => handleFormChange(e, values, setValues)}
 							/>
 						</div>
 					</div>
@@ -194,12 +303,20 @@ const EditItemModal = () => {
 
 				<div className='flex flex-row justify-between'>
 					<div className='flex flex-row gap-3'>
-						<ButtonPrimary text={'Save'} click={hideEditItemModal} />
+						<ButtonPrimary
+							text={'Save'}
+							context={(e) => handleEditItem(e, values, itemInfo._id)}
+							url={'/inventory'}
+						/>
 						<ButtonSecondary text={'Cancel'} click={hideEditItemModal} />
 					</div>
 
 					<div className='flex flex-row gap-3'>
-						<ButtonDelete text={'Delete'} click={hideEditItemModal} />
+						<ButtonDelete
+							text={'Delete'}
+							context={(e) => handleDeleteItem(e, itemInfo._id)}
+							url={'/inventory'}
+						/>
 					</div>
 				</div>
 			</div>

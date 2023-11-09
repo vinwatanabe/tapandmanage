@@ -14,6 +14,7 @@ const ItemDetails = () => {
 	const params = useParams().id;
 	const effectActive = useRef(false);
 	const [item, setItem] = useState({});
+	const [groupName, setGroupName] = useState('');
 
 	useEffect(() => {
 		if (effectActive.current === true) {
@@ -33,6 +34,7 @@ const ItemDetails = () => {
 					.then((resp) => {
 						const itemResponse = resp.data;
 						setItem(itemResponse[0]);
+						setGroupName(itemResponse[0].group.groupName);
 					})
 					.catch((error) => console.log(error));
 			}
@@ -47,7 +49,7 @@ const ItemDetails = () => {
 
 	return (
 		<>
-			<EditItemModal />
+			<EditItemModal groupName={groupName} itemInfo={item} />
 			<RegisterNFCModal />
 			<NFCModal NFCType={'register'} />
 
