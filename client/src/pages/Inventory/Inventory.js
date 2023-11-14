@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import GroupBox from '../../components/GroupBox';
@@ -14,11 +14,9 @@ import { Context } from '../../context/AuthContext';
 
 const Inventory = () => {
 	const { editGroupInfo } = useContext(Context);
-	// const effectActive = useRef(false);
 	const [groups, setGroups] = useState([]);
 
 	useEffect(() => {
-		// if (effectActive.current === true) {
 		async function getGroups() {
 			const urlHandler = process.env.REACT_APP_URL_HANDLER;
 			const url = `${urlHandler}/group/all`;
@@ -35,17 +33,11 @@ const Inventory = () => {
 				.then((resp) => {
 					const allGroups = resp.data;
 					setGroups(allGroups);
-					console.log('Groups loaded');
 				})
 				.catch((error) => console.log(error));
 		}
 
 		getGroups();
-		// }
-
-		// return () => {
-		// 	effectActive.current = true;
-		// };
 	}, []);
 
 	return (

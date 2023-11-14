@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
@@ -12,39 +12,32 @@ import axios from 'axios';
 
 const ItemDetails = () => {
 	const params = useParams().id;
-	const effectActive = useRef(false);
 	const [item, setItem] = useState({});
 	const [groupName, setGroupName] = useState('');
 
 	useEffect(() => {
-		if (effectActive.current === true) {
-			async function getItem() {
-				const urlHandler = process.env.REACT_APP_URL_HANDLER;
-				const url = `${urlHandler}/item/${params}`;
-				const token = localStorage.getItem('token');
-				const config = {
-					headers: {
-						'Content-Type': 'application/json',
-						'x-auth-token': `${JSON.parse(token)}`,
-					},
-				};
+		async function getItem() {
+			const urlHandler = process.env.REACT_APP_URL_HANDLER;
+			const url = `${urlHandler}/item/${params}`;
+			const token = localStorage.getItem('token');
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+					'x-auth-token': `${JSON.parse(token)}`,
+				},
+			};
 
-				await axios
-					.get(url, config)
-					.then((resp) => {
-						const itemResponse = resp.data;
-						setItem(itemResponse[0]);
-						setGroupName(itemResponse[0].group.groupName);
-					})
-					.catch((error) => console.log(error));
-			}
-
-			getItem();
+			await axios
+				.get(url, config)
+				.then((resp) => {
+					const itemResponse = resp.data;
+					setItem(itemResponse[0]);
+					setGroupName(itemResponse[0].group.groupName);
+				})
+				.catch((error) => console.log(error));
 		}
 
-		return () => {
-			effectActive.current = true;
-		};
+		getItem();
 	}, [params]);
 
 	return (
