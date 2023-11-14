@@ -14,38 +14,38 @@ import { Context } from '../../context/AuthContext';
 
 const Inventory = () => {
 	const { editGroupInfo } = useContext(Context);
-	const effectActive = useRef(false);
+	// const effectActive = useRef(false);
 	const [groups, setGroups] = useState([]);
 
 	useEffect(() => {
-		if (effectActive.current === true) {
-			async function getGroups() {
-				const urlHandler = process.env.REACT_APP_URL_HANDLER;
-				const url = `${urlHandler}/group/all`;
-				const token = localStorage.getItem('token');
-				const config = {
-					headers: {
-						'Content-Type': 'application/json',
-						'x-auth-token': `${JSON.parse(token)}`,
-					},
-				};
+		// if (effectActive.current === true) {
+		async function getGroups() {
+			const urlHandler = process.env.REACT_APP_URL_HANDLER;
+			const url = `${urlHandler}/group/all`;
+			const token = localStorage.getItem('token');
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+					'x-auth-token': `${JSON.parse(token)}`,
+				},
+			};
 
-				await axios
-					.get(url, config)
-					.then((resp) => {
-						const allGroups = resp.data;
-						setGroups(allGroups);
-						console.log('Groups loaded');
-					})
-					.catch((error) => console.log(error));
-			}
-
-			getGroups();
+			await axios
+				.get(url, config)
+				.then((resp) => {
+					const allGroups = resp.data;
+					setGroups(allGroups);
+					console.log('Groups loaded');
+				})
+				.catch((error) => console.log(error));
 		}
 
-		return () => {
-			effectActive.current = true;
-		};
+		getGroups();
+		// }
+
+		// return () => {
+		// 	effectActive.current = true;
+		// };
 	}, []);
 
 	return (
