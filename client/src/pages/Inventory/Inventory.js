@@ -48,12 +48,14 @@ const Inventory = () => {
 			<NFCModal NFCType={'read'} />
 
 			<Sidebar />
-			<div className='container w-full flex flex-col float-right ml-72 mx-auto'>
+			<div className='container w-full flex flex-col sm:float-right sm:ml-72 mx-auto'>
 				<Header />
 
-				<div className='pl-10 pr-10'>
-					<div className='pt-5 pb-5 flex flex-row items-center justify-between'>
-						<p className='text-title-lg font-bold'>Inventory Management</p>
+				<div className='px-5 sm:px-10'>
+					<div className='pt-5 pb-5 flex flex-col sm:flex-row items-center justify-between'>
+						<p className='text-title-lg font-bold mb-4 sm:mb-0'>
+							Inventory Management
+						</p>
 
 						<div className='flex flex-row'>
 							<ButtonSecondary

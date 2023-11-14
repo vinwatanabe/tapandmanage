@@ -6,9 +6,9 @@ import formatDate from '../js/formatDate';
 
 const ItemDetailsBox = ({ item, styles }) => {
 	return (
-		<div className={`bg-white p-8 rounded-lg mb-8 ${styles}`}>
+		<div className={`bg-white p-4 sm:p-8 rounded-lg mb-8 ${styles}`}>
 			<div className='flex flex-row items-center justify-between mb-5'>
-				<div className='flex flex-row w-full gap-x-3 items-center'>
+				<div className='flex flex-row w-full gap-x-3 items-center justify-center sm:justify-normal'>
 					<ItemStatus status={item.status} />
 					<p className='font-bold'>
 						{item.itemName} - {item.brandName}
@@ -19,10 +19,20 @@ const ItemDetailsBox = ({ item, styles }) => {
 			<div>
 				<hr className='text-borderGrey mb-8' />
 				<div className='flex flex-row justify-between'>
-					<div className='flex flex-col gap-5 basis-1/3'>
+					<div className='grid grid-cols-2 sm:grid-cols-3 w-full gap-4'>
 						<div>
 							<p className='text-mediumGrey text-sm mb-1'>SKU</p>
 							<p>{item.SKU}</p>
+						</div>
+
+						<div className='col-span-2 sm:col-span-1'>
+							<p className='text-mediumGrey text-sm mb-1'>Bar code</p>
+							<p>{item.barcode}</p>
+						</div>
+
+						<div>
+							<p className='text-mediumGrey text-sm mb-1'>Item type</p>
+							<p>{item.itemType}</p>
 						</div>
 
 						<div>
@@ -31,51 +41,23 @@ const ItemDetailsBox = ({ item, styles }) => {
 						</div>
 
 						<div>
-							<p className='text-mediumGrey text-sm mb-1'>Cost</p>
-							<p>${item.cost}</p>
-						</div>
-
-						<div>
-							<p className='text-mediumGrey text-sm mb-1'>Units</p>
-							<p>
-								{item.units} {item.measure}
-							</p>
-						</div>
-					</div>
-
-					<div className='flex flex-col gap-5 basis-1/3'>
-						<div>
-							<p className='text-mediumGrey text-sm mb-1'>Bar code</p>
-							<p>{item.barcode}</p>
-						</div>
-
-						<div>
 							<p className='text-mediumGrey text-sm mb-1'>Stock release</p>
 							<p>{formatDate(item.stockRelease)}</p>
 						</div>
 
 						<div>
-							<p className='text-mediumGrey text-sm mb-1'>Selling price</p>
-							<p>${item.sellingPrice}</p>
-						</div>
-
-						<div>
-							<p className='text-mediumGrey text-sm mb-1'>Minimum amount</p>
-							<p>
-								{item.minimumAmount} {item.measure}
-							</p>
-						</div>
-					</div>
-
-					<div className='flex flex-col gap-5 basis-1/3'>
-						<div>
-							<p className='text-mediumGrey text-sm mb-1'>Item type</p>
-							<p>{item.itemType}</p>
-						</div>
-
-						<div>
 							<p className='text-mediumGrey text-sm mb-1'>Expiration date</p>
 							<p>{formatDate(item.expirationDate)}</p>
+						</div>
+
+						<div>
+							<p className='text-mediumGrey text-sm mb-1'>Cost</p>
+							<p>${item.cost}</p>
+						</div>
+
+						<div>
+							<p className='text-mediumGrey text-sm mb-1'>Selling price</p>
+							<p>${item.sellingPrice}</p>
 						</div>
 
 						<div>
@@ -86,6 +68,20 @@ const ItemDetailsBox = ({ item, styles }) => {
 									item.sellingPrice
 								).toFixed(1)}
 								% (${(item.sellingPrice - item.cost).toFixed(2)})
+							</p>
+						</div>
+
+						<div>
+							<p className='text-mediumGrey text-sm mb-1'>Units</p>
+							<p>
+								{item.units} {item.measure}
+							</p>
+						</div>
+
+						<div>
+							<p className='text-mediumGrey text-sm mb-1'>Minimum amount</p>
+							<p>
+								{item.minimumAmount} {item.measure}
 							</p>
 						</div>
 					</div>
@@ -99,7 +95,7 @@ const ItemDetailsBox = ({ item, styles }) => {
 				</div>
 			</div>
 
-			<div className='flex flex-row justify-end mt-8'>
+			<div className='flex flex-row justify-center sm:justify-end mt-8'>
 				<ButtonPrimary
 					text={'Register NFC'}
 					icon={'NFC'}

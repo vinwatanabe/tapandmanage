@@ -47,11 +47,11 @@ const ItemDetails = () => {
 			<NFCModal NFCType={'register'} />
 
 			<Sidebar />
-			<div className='container w-full flex flex-col float-right ml-72'>
+			<div className='container w-full flex flex-col sm:float-right sm:ml-72'>
 				<Header />
 
-				<div className='pl-10 pr-10'>
-					<div className='pt-5 pb-5 flex flex-row items-center justify-between'>
+				<div className='px-5 sm:px-10'>
+					<div className='py-5 flex flex-col sm:flex-row items-center justify-between'>
 						<div className='flex flex-row  gap-2 items-center'>
 							<p className='text-title-lg font-bold'>Item details</p>
 

@@ -18,7 +18,7 @@ const NFC = () => {
 		<>
 			<Sidebar />
 
-			<div className='container w-full flex flex-col float-right ml-72'>
+			<div className='container w-full flex flex-col sm:float-right sm:ml-72'>
 				<Header />
 
 				<div className='pl-10 pr-10'>

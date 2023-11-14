@@ -1,0 +1,7 @@
+.sidebar {
+	transition: 1.3s;
+}
+
+.sidebar.closed {
+	margin-left: -100%;
+}
