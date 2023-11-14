@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import ButtonSecondary from '../components/ButtonSecondary';
 import NFCIcon from '../images/assets/nfc-ico.svg';
-import { hideRegisterNFCModal, saveRegisterNFCModal } from '../js/displayModal';
+import { hideRegisterNFCModal } from '../js/displayModal';
 import handleFormChange from '../js/handleFormChange';
 import ButtonPrimary from './ButtonPrimary';
+import { Context } from '../context/AuthContext';
 
 const RegisterNFCModal = () => {
 	const [values, setValues] = useState('');
+	const { registerNFC } = useContext(Context);
 	const itemParams = useParams().id;
 
 	useEffect(() => {
@@ -21,10 +23,6 @@ const RegisterNFCModal = () => {
 
 		setInitialData();
 	}, []);
-
-	const handleSaveNFC = () => {
-		saveRegisterNFCModal(values, itemParams);
-	};
 
 	return (
 		<div
@@ -61,7 +59,11 @@ const RegisterNFCModal = () => {
 				</div>
 
 				<div className='flex flex-row justify-center gap-5'>
-					<ButtonPrimary text={'Save'} click={handleSaveNFC} />
+					<ButtonPrimary
+						text={'Save'}
+						context={(e) => registerNFC(e, values, itemParams)}
+						url={'/inventory'}
+					/>
 					<ButtonSecondary text={'Cancel'} click={hideRegisterNFCModal} />
 				</div>
 			</div>

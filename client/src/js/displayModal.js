@@ -1,5 +1,3 @@
-import { registerNFC } from './nfcHandler';
-
 // Modal manager functions
 const hideModal = (id) => {
 	document.getElementById(id).classList.add('hidden');
@@ -79,16 +77,9 @@ const showRegisterNFCModal = () => {
 	showModal('registerNFCModal');
 };
 
-const saveRegisterNFCModal = (values, params) => {
-	if (!('NDEFReader' in window)) {
-		alert(
-			'Web NFC is not available. Use Google Chrome on a supported mobile device.'
-		);
-	} else {
-		registerNFC(values, params);
-		hideModal('registerNFCModal');
-		showModal('NFCModal');
-	}
+const saveRegisterNFCModal = () => {
+	hideModal('registerNFCModal');
+	showModal('NFCModal');
 };
 
 export {
