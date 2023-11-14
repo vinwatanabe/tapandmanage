@@ -13,12 +13,12 @@ const AddItemModal = ({ groups }) => {
 		<div
 			id='addItemModal'
 			className='modal fixed w-full h-full bg-darkBlue bg-opacity-50 z-50 justify-center items-center hidden'>
-			<div className='flex flex-col p-8 bg-white basis-8/12 rounded-lg overflow-y-scroll max-h-[80%]'>
+			<div className='flex flex-col p-4 sm:p-8 bg-white basis-11/12 sm:basis-8/12 rounded-lg overflow-y-scroll max-h-[80%]'>
 				<p className='font-bold'>Add item</p>
 				<hr className='text-borderGrey my-4' />
 
 				<form className='mb-4 flex flex-col gap-5'>
-					<div className='flex flex-row gap-5 justify-between'>
+					<div className='flex flex-row gap-5 justify-between flex-wrap sm:flex-nowrap'>
 						<div className='flex flex-col gap-2 w-full'>
 							<label htmlFor='groupName'>Group name:</label>
 							<select
@@ -75,8 +75,8 @@ const AddItemModal = ({ groups }) => {
 						</div>
 					</div>
 
-					<div className='flex flex-row gap-5 justify-between'>
-						<div className='flex flex-col gap-2 w-full basis-2/3'>
+					<div className='flex flex-row gap-5 justify-between flex-wrap sm:flex-nowrap'>
+						<div className='flex flex-col gap-2 w-full sm:basis-2/3'>
 							<label htmlFor='itemName'>Item name:</label>
 							<input
 								type='text'
@@ -88,7 +88,7 @@ const AddItemModal = ({ groups }) => {
 							/>
 						</div>
 
-						<div className='flex flex-col gap-2 w-full basis-1/3'>
+						<div className='flex flex-col gap-2 w-full sm:basis-1/3'>
 							<label htmlFor='brandName'>Brand:</label>
 							<input
 								type='text'
@@ -101,7 +101,7 @@ const AddItemModal = ({ groups }) => {
 						</div>
 					</div>
 
-					<div className='flex flex-row gap-5 justify-between'>
+					<div className='flex flex-row gap-5 justify-between flex-wrap sm:flex-nowrap'>
 						<div className='flex flex-col gap-2 w-full'>
 							<label htmlFor='stockDate'>Stock date:</label>
 							<input
@@ -136,7 +136,7 @@ const AddItemModal = ({ groups }) => {
 						</div>
 					</div>
 
-					<div className='flex flex-row gap-5 justify-between'>
+					<div className='flex flex-row gap-5 justify-between flex-wrap sm:flex-nowrap'>
 						<div className='flex flex-col gap-2 w-full'>
 							<label htmlFor='cost'>Cost:</label>
 							<input
@@ -177,7 +177,7 @@ const AddItemModal = ({ groups }) => {
 						</div>
 					</div>
 
-					<div className='flex flex-row gap-5 justify-between'>
+					<div className='flex flex-row gap-5 justify-between flex-wrap sm:flex-nowrap'>
 						<div className='flex flex-col gap-2 w-full'>
 							<label htmlFor='units'>Units:</label>
 							<input
@@ -232,7 +232,7 @@ const AddItemModal = ({ groups }) => {
 					</div>
 				</form>
 
-				<div className='flex flex-row justify-end gap-3'>
+				<div className='flex flex-row justify-normal sm:justify-end gap-3'>
 					<ButtonPrimary
 						text={'Save'}
 						context={(e) => handleAddItem(e, values)}

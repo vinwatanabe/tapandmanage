@@ -13,7 +13,7 @@ const AddGroupModal = () => {
 		<div
 			id='addGroupModal'
 			className='modal fixed w-full h-full bg-darkBlue bg-opacity-50 z-50 justify-center items-center hidden'>
-			<div className='flex flex-col p-8 bg-white basis-6/12 rounded-lg'>
+			<div className='flex flex-col p-4 sm:p-8 bg-white basis-11/12 sm:basis-6/12 rounded-lg'>
 				<p className='font-bold'>Add group</p>
 				<hr className='text-borderGrey my-4' />
 
@@ -31,7 +31,7 @@ const AddGroupModal = () => {
 					</div>
 				</form>
 
-				<div className='flex flex-row justify-end gap-3'>
+				<div className='flex flex-row justify-normal sm:justify-end gap-3'>
 					<ButtonPrimary
 						text={'Save'}
 						context={(e) => handleAddGroup(e, values)}

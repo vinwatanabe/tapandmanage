@@ -17,12 +17,12 @@ const Register = () => {
 				<HeaderHome />
 
 				<div className='w-full flex flex-col mx-auto my-20'>
-					<div className='flex flex-col bg-white w-8/12 max-w-7xl mx-auto rounded-xl p-8'>
+					<div className='flex flex-col bg-white w-11/12 sm:w-8/12 max-w-7xl mx-auto rounded-xl p-4 sm:p-8'>
 						<p className='font-bold mb-4'>Registration</p>
 						<hr className='text-borderGrey' />
 
 						<form className='flex flex-col gap-5 my-4'>
-							<div className='flex flex-row gap-5 justify-between'>
+							<div className='flex flex-row gap-5 justify-between flex-wrap sm:flex-nowrap'>
 								<div className='flex flex-col gap-2 w-full'>
 									<label htmlFor='firstName'>First name:</label>
 									<input
@@ -48,7 +48,7 @@ const Register = () => {
 								</div>
 							</div>
 
-							<div className='flex flex-row gap-5 justify-between'>
+							<div className='flex flex-row gap-5 justify-between flex-wrap sm:flex-nowrap'>
 								<div className='flex flex-col gap-2 w-full'>
 									<label htmlFor='company'>Company:</label>
 									<input
@@ -74,7 +74,7 @@ const Register = () => {
 								</div>
 							</div>
 
-							<div className='flex flex-row gap-5 justify-between'>
+							<div className='flex flex-row gap-5 justify-between flex-wrap sm:flex-nowrap'>
 								<div className='flex flex-col gap-2 w-full'>
 									<label htmlFor='email'>E-mail:</label>
 									<input
