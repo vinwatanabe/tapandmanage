@@ -334,6 +334,48 @@ function AuthContext({ children }) {
 		}
 	}
 
+	// Handle loadNFCPage
+	async function handleLoadNFCPage(pageId, NFCType) {
+		let url = '';
+		const token = localStorage.getItem('token');
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-auth-token': `${JSON.parse(token)}`,
+			},
+		};
+
+		if (NFCType === 'remove') {
+			url = `${process.env.REACT_APP_URL_HANDLER}/nfc/remove/${pageId}`;
+
+			await axios
+				.put(url, config)
+				.then(() => {
+					alert('Item removed from inventory');
+					return navigate(`/item-details/${pageId}`);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		} else if (NFCType === 'add') {
+			url = `${process.env.REACT_APP_URL_HANDLER}/nfc/add/${pageId}`;
+
+			await axios
+				.put(url, config)
+				.then(() => {
+					alert('Item added from inventory');
+					return navigate(`/item-details/${pageId}`);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		} else if (NFCType === 'check') {
+			return navigate(`/item-details/${pageId}`);
+		} else {
+			return navigate(`/item-details/error`);
+		}
+	}
+
 	return (
 		<Context.Provider
 			value={{
@@ -356,6 +398,7 @@ function AuthContext({ children }) {
 				handleEditItem,
 				handleDeleteItem,
 				registerNFC,
+				handleLoadNFCPage,
 			}}>
 			{children}
 		</Context.Provider>

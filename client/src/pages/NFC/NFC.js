@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
+import { Context } from '../../context/AuthContext';
 
 const NFC = () => {
+	const { handleLoadNFCPage } = useContext(Context);
+	const location = useLocation();
+	const urlParams = useParams().id;
+
+	useEffect(() => {
+		let nfcType = location.pathname.split('/')[2];
+		handleLoadNFCPage(urlParams, nfcType);
+	}, [handleLoadNFCPage, location, urlParams]);
+
 	return (
 		<>
 			<Sidebar />
