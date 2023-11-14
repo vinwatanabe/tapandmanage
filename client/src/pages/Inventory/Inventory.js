@@ -35,6 +35,7 @@ const Inventory = () => {
 					.then((resp) => {
 						const allGroups = resp.data;
 						setGroups(allGroups);
+						console.log('Groups loaded');
 					})
 					.catch((error) => console.log(error));
 			}
