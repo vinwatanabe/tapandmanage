@@ -44,6 +44,7 @@ function AuthContext({ children }) {
 		};
 
 		let token;
+		setLoading(true);
 
 		await axios
 			.post(url, values, config)
@@ -53,6 +54,7 @@ function AuthContext({ children }) {
 				localStorage.setItem('token', JSON.stringify(token));
 				axios.defaults.headers.Authorization = `Bearer ${token}`;
 				setAuthenticated(true);
+				setLoading(false);
 
 				return navigate('/inventory');
 			})
@@ -61,6 +63,7 @@ function AuthContext({ children }) {
 				localStorage.removeItem('token');
 				axios.defaults.Authorization = undefined;
 				removeUserData();
+				setLoading(false);
 
 				return navigate('/');
 			});
@@ -80,6 +83,7 @@ function AuthContext({ children }) {
 		};
 
 		let token;
+		setLoading(true);
 
 		await axios
 			.post(url, values, config)
@@ -89,6 +93,7 @@ function AuthContext({ children }) {
 				localStorage.setItem('token', JSON.stringify(token));
 				axios.defaults.headers.Authorization = `Bearer ${token}`;
 				setAuthenticated(true);
+				setLoading(false);
 
 				return navigate('/inventory');
 			})
@@ -97,6 +102,7 @@ function AuthContext({ children }) {
 				localStorage.removeItem('token');
 				axios.defaults.headers.Authorization = undefined;
 				removeUserData();
+				setLoading(false);
 
 				return navigate('/');
 			});
