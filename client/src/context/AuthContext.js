@@ -361,7 +361,7 @@ function AuthContext({ children }) {
 			url = `${process.env.REACT_APP_URL_HANDLER}/nfc/add/${pageId}`;
 
 			await axios
-				.put(url, config)
+				.put(url, {}, config)
 				.then(() => {
 					alert('Item added to inventory');
 					return navigate(`/item-details/${pageId}`);

@@ -78,7 +78,7 @@ const Register = () => {
 								<div className='flex flex-col gap-2 w-full'>
 									<label htmlFor='email'>E-mail:</label>
 									<input
-										type='text'
+										type='email'
 										id='email'
 										name='email'
 										placeholder='E-mail'
