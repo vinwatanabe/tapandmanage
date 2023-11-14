@@ -7,14 +7,14 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
 	return (
 		<div className='flex flex-col w-full bg-darkBlue mx-auto text-white text-base'>
-			<div className='flex flex-row w-full mx-auto max-w-7xl px-20 2xl:px-0 justify-between py-10'>
-				<div>
-					<picture>
+			<div className='flex flex-row w-full mx-auto max-w-7xl px-5 sm:px-20 2xl:px-0 justify-between py-10 flex-wrap sm:flex-nowrap'>
+				<div className='basis-full sm:basis-auto mb-10 sm:mb-0'>
+					<picture className='flex w-full justify-center sm:block'>
 						<img src={Logo} alt='' />
 					</picture>
 				</div>
 
-				<div>
+				<div className='basis-1/4 sm:basis-auto'>
 					<ul className='flex flex-col'>
 						<li className='font-bold'>Product</li>
 						<li>
@@ -29,7 +29,7 @@ const Footer = () => {
 					</ul>
 				</div>
 
-				<div>
+				<div className='basis-1/4 sm:basis-auto'>
 					<ul className='flex flex-col'>
 						<li className='font-bold'>Resources</li>
 						<li>
@@ -44,7 +44,7 @@ const Footer = () => {
 					</ul>
 				</div>
 
-				<div>
+				<div className='basis-1/4 sm:basis-auto'>
 					<ul className='flex flex-col'>
 						<li className='font-bold'>Company</li>
 						<li>
@@ -56,8 +56,8 @@ const Footer = () => {
 					</ul>
 				</div>
 
-				<div>
-					<ul className='flex flex-col gap-2'>
+				<div className='basis-full sm:basis-auto'>
+					<ul className='flex flex-col gap-2 text-center sm:text-left mt-10 sm:mt-0'>
 						<li className='font-bold'>Follow us</li>
 						<ul className='flex flex-row gap-5 justify-center'>
 							<li>
@@ -77,13 +77,13 @@ const Footer = () => {
 
 			<hr className='flex flex-row w-full mx-auto max-w-7xl px-20 2xl:px-0' />
 
-			<div className='flex flex-row w-full mx-auto max-w-7xl px-20 2xl:px-0 justify-between py-10'>
+			<div className='flex flex-row w-full mx-auto max-w-7xl px-20 2xl:px-0 justify-center sm:justify-between py-10 flex-wrap sm:flex-nowrap text-center sm:text-left'>
 				<div>
 					<p>Tap & Manage 2023</p>
 				</div>
 
 				<div>
-					<ul className='flex flex-row gap-6'>
+					<ul className='flex flex-col sm:flex-row gap-0 sm:gap-6 flex-wrap sm:flex-nowrap'>
 						<li>
 							<Link to={'#!'}>Terms and Privacy</Link>
 						</li>

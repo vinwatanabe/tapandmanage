@@ -8,7 +8,7 @@ const NFCModal = ({ NFCType }) => {
 		<div
 			id='NFCModal'
 			className='modal fixed w-full h-full bg-darkBlue bg-opacity-50 z-50 justify-center items-center hidden'>
-			<div className='flex flex-col p-8 bg-white basis-6/12 rounded-lg'>
+			<div className='flex flex-col p-8 bg-white basis-10/12 sm:basis-6/12 rounded-lg'>
 				<div className='flex justify-center mb-8'>
 					<div className='flex flex-col items-center'>
 						<picture className='mb-5'>

@@ -17,7 +17,7 @@ const Login = () => {
 				<HeaderHome />
 
 				<div className='w-full flex flex-col mx-auto my-20'>
-					<div className='flex flex-col bg-white w-4/12 max-w-7xl mx-auto rounded-xl p-8'>
+					<div className='flex flex-col bg-white w-11/12 sm:w-4/12 max-w-7xl mx-auto rounded-xl p-4 sm:p-8'>
 						<p className='font-bold mb-4'>Login</p>
 						<hr className='text-borderGrey' />
 
