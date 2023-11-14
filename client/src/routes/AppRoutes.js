@@ -8,6 +8,7 @@ import Register from '../pages/Register/Register';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import Inventory from '../pages/Inventory/Inventory';
 import ItemDetails from '../pages/ItemDetails/ItemDetails';
+import NFC from '../pages/NFC/NFC';
 import NotFound from '../pages/NotFound/NotFound';
 import { Context } from '../context/AuthContext';
 
@@ -53,6 +54,30 @@ const AppRoutes = () => {
 				element={
 					<ProtectedRoute>
 						<ItemDetails />
+					</ProtectedRoute>
+				}
+			/>
+			<Route
+				path='/nfc/remove/:id'
+				element={
+					<ProtectedRoute>
+						<NFC />
+					</ProtectedRoute>
+				}
+			/>
+			<Route
+				path='/nfc/add/:id'
+				element={
+					<ProtectedRoute>
+						<NFC />
+					</ProtectedRoute>
+				}
+			/>
+			<Route
+				path='/nfc/check/:id'
+				element={
+					<ProtectedRoute>
+						<NFC />
 					</ProtectedRoute>
 				}
 			/>

@@ -7,6 +7,10 @@ import {
 	hideAddItemModal,
 	hideEditGroupModal,
 } from '../js/displayModal';
+import {
+	saveRegisterNFCModal,
+	hideRegisteringNFCModal,
+} from '../js/displayModal';
 
 const Context = createContext();
 
@@ -292,6 +296,44 @@ function AuthContext({ children }) {
 			});
 	}
 
+	// Handle Register NFC
+	async function registerNFC(event, values, params) {
+		event.preventDefault();
+
+		let nfcActionType = '';
+
+		if (values.nfcAction === 'nfc-remove-product') {
+			nfcActionType = 'remove';
+		} else if (values.nfcAction === 'nfc-add-product') {
+			nfcActionType = 'add';
+		} else if (values.nfcAction === 'nf-check-item') {
+			nfcActionType = 'check';
+		}
+
+		const url = `${process.env.REACT_APP_URL_HANDLER}/nfc/${nfcActionType}/${params}`;
+
+		if (!('NDEFReader' in window)) {
+			alert(
+				'Web NFC is not available. Use Google Chrome on a supported mobile device.'
+			);
+		} else {
+			try {
+				saveRegisterNFCModal();
+
+				const ndef = new window.NDEFReader();
+				await ndef.write({
+					records: [{ recordType: 'url', data: `${url}` }],
+				});
+
+				hideRegisteringNFCModal();
+
+				alert('Item saved!');
+			} catch (error) {
+				alert('Error: ' + error);
+			}
+		}
+	}
+
 	return (
 		<Context.Provider
 			value={{
@@ -313,6 +355,7 @@ function AuthContext({ children }) {
 				handleDeleteGroup,
 				handleEditItem,
 				handleDeleteItem,
+				registerNFC,
 			}}>
 			{children}
 		</Context.Provider>
