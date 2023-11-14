@@ -349,7 +349,7 @@ function AuthContext({ children }) {
 			url = `${process.env.REACT_APP_URL_HANDLER}/nfc/remove/${pageId}`;
 
 			await axios
-				.put(url, config)
+				.put(url, {}, config)
 				.then(() => {
 					alert('Item removed from inventory');
 					return navigate(`/item-details/${pageId}`);
@@ -363,7 +363,7 @@ function AuthContext({ children }) {
 			await axios
 				.put(url, config)
 				.then(() => {
-					alert('Item added from inventory');
+					alert('Item added to inventory');
 					return navigate(`/item-details/${pageId}`);
 				})
 				.catch((error) => {
