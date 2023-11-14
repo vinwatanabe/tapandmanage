@@ -310,7 +310,7 @@ function AuthContext({ children }) {
 			nfcActionType = 'check';
 		}
 
-		const url = `${process.env.REACT_APP_URL_HANDLER}/nfc/${nfcActionType}/${params}`;
+		const url = `${process.env.REACT_APP_FRONTEND_URL_HANDLER}/nfc/${nfcActionType}/${params}`;
 
 		if (!('NDEFReader' in window)) {
 			alert(
