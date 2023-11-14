@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import ButtonPrimary from '../components/ButtonPrimary';
 import ButtonSecondary from '../components/ButtonSecondary';
 import { hideEditItemModal } from '../js/displayModal';
@@ -12,31 +12,28 @@ const EditItemModal = ({ groupName, itemInfo }) => {
 	const [values, setValues] = useState('');
 	const [groups, setGroups] = useState([]);
 	const { handleEditItem, handleDeleteItem } = useContext(Context);
-	const effectActive = useRef(false);
 
 	useEffect(() => {
-		if (effectActive.current === true) {
-			async function getGroups() {
-				const urlHandler = process.env.REACT_APP_URL_HANDLER;
-				const url = `${urlHandler}/group/all`;
-				const token = localStorage.getItem('token');
-				const config = {
-					headers: {
-						'Content-Type': 'application/json',
-						'x-auth-token': `${JSON.parse(token)}`,
-					},
-				};
+		async function getGroups() {
+			const urlHandler = process.env.REACT_APP_URL_HANDLER;
+			const url = `${urlHandler}/group/all`;
+			const token = localStorage.getItem('token');
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+					'x-auth-token': `${JSON.parse(token)}`,
+				},
+			};
 
-				await axios
-					.get(url, config)
-					.then((resp) => {
-						setGroups(resp.data);
-					})
-					.catch((error) => console.log(error));
-			}
-
-			getGroups();
+			await axios
+				.get(url, config)
+				.then((resp) => {
+					setGroups(resp.data);
+				})
+				.catch((error) => console.log(error));
 		}
+
+		getGroups();
 
 		const item = {
 			groupName: groupName,
@@ -58,10 +55,6 @@ const EditItemModal = ({ groupName, itemInfo }) => {
 		};
 
 		setValues(item);
-
-		return () => {
-			effectActive.current = true;
-		};
 	}, [groupName, itemInfo]);
 
 	return (
