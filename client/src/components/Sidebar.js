@@ -2,15 +2,26 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../images/brand/tap-manage-logo.svg';
 import { Context } from '../context/AuthContext';
+import { toggleSideBar } from '../js/sidebarAnimation';
 
 const Sidebar = () => {
 	const { handleLogout } = useContext(Context);
 
 	return (
 		<>
-			<aside className='flex flex-col bg-darkBlue w-72 h-screen fixed'>
-				<div className='flex items-center h-20 ml-10'>
-					<img className='w-44 h-fit' src={Logo} alt='Tap & Manage Logo' />
+			<aside className='sidebar flex flex-col bg-darkBlue w-11/12 sm:w-72 h-screen fixed z-[999] overflow-x-hidden'>
+				<div className='flex items-center h-20 mx-10 justify-between'>
+					<img
+						className='w-40 sm:w-44 h-fit'
+						src={Logo}
+						alt='Tap & Manage Logo'
+					/>
+
+					<span
+						className='material-symbols-outlined text-white visible sm:invisible cursor-pointer'
+						onClick={toggleSideBar}>
+						close
+					</span>
 				</div>
 
 				<div className='flex flex-col h-full justify-between'>
