@@ -44,11 +44,11 @@ function AuthContext({ children }) {
 		};
 
 		let token;
+		setLoading(true);
 
 		await axios
 			.post(url, values, config)
 			.then((resp) => {
-				setLoading(true);
 				token = resp.data.token;
 
 				localStorage.setItem('token', JSON.stringify(token));
@@ -83,11 +83,11 @@ function AuthContext({ children }) {
 		};
 
 		let token;
+		setLoading(true);
 
 		await axios
 			.post(url, values, config)
 			.then((resp) => {
-				setLoading(true);
 				token = resp.data.token;
 
 				localStorage.setItem('token', JSON.stringify(token));
