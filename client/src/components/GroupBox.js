@@ -87,9 +87,11 @@ const GroupBox = ({ groupId, groupName, items, styles, groupKey }) => {
 								<p className='my-1 basis-1/12 inline'>
 									{item.units + ' ' + item.measure}
 								</p>
-								<p className='my-1 basis-1/12 hidden sm:inline'>${item.cost}</p>
 								<p className='my-1 basis-1/12 hidden sm:inline'>
-									${item.sellingPrice}
+									${item.cost.toFixed(2)}
+								</p>
+								<p className='my-1 basis-1/12 hidden sm:inline'>
+									${item.sellingPrice.toFixed(2)}
 								</p>
 								<p className='my-1basis-1/12 font-bold hidden sm:inline'>
 									{(

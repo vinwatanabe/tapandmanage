@@ -52,12 +52,12 @@ const ItemDetailsBox = ({ item, styles }) => {
 
 						<div>
 							<p className='text-mediumGrey text-sm mb-1'>Cost</p>
-							<p>${item.cost}</p>
+							<p>${item.cost.toFixed(2)}</p>
 						</div>
 
 						<div>
 							<p className='text-mediumGrey text-sm mb-1'>Selling price</p>
-							<p>${item.sellingPrice}</p>
+							<p>${item.sellingPrice.toFixed(2)}</p>
 						</div>
 
 						<div>
