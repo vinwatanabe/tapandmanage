@@ -6,6 +6,8 @@ import {
 	hideEditItemModal,
 	hideAddItemModal,
 	hideEditGroupModal,
+	hideReadNFCModal,
+	showReadNFCModal,
 } from '../js/displayModal';
 import {
 	saveRegisterNFCModal,
@@ -376,6 +378,40 @@ function AuthContext({ children }) {
 		}
 	}
 
+	// Handle ReadNFC
+	async function handleReadNFC() {
+		if (!('NDEFReader' in window)) {
+			alert(
+				'Web NFC is not available. Use Google Chrome on a supported mobile device.'
+			);
+		} else {
+			try {
+				showReadNFCModal();
+
+				const ndef = new window.NDEFReader();
+
+				await ndef
+					.scan()
+					.then(() => {
+						ndef.onreadingerror = (event) => {
+							hideReadNFCModal();
+							console.log('Error reading NFC tag!');
+						};
+
+						ndef.onreading = (event) => {
+							hideReadNFCModal();
+							alert('NFC Read!');
+						};
+					})
+					.catch((error) => {
+						console.log(`Error: Scan failed to start: ${error}`);
+					});
+			} catch (error) {
+				alert('Error: ' + error);
+			}
+		}
+	}
+
 	return (
 		<Context.Provider
 			value={{
@@ -399,6 +435,7 @@ function AuthContext({ children }) {
 				handleDeleteItem,
 				registerNFC,
 				handleLoadNFCPage,
+				handleReadNFC,
 			}}>
 			{children}
 		</Context.Provider>

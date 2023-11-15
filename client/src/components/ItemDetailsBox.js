@@ -95,7 +95,7 @@ const ItemDetailsBox = ({ item, styles }) => {
 				</div>
 			</div>
 
-			<div className='flex flex-row justify-center sm:justify-end mt-8'>
+			<div className='flex flex-row justify-center sm:justify-end mt-8 sm:hidden'>
 				<ButtonPrimary
 					text={'Register NFC'}
 					icon={'NFC'}
