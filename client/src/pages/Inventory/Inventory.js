@@ -61,7 +61,7 @@ const Inventory = () => {
 							<ButtonSecondary
 								text={'Read NFC'}
 								icon={'nfc'}
-								styles={'mr-3'}
+								styles={'mr-3 sm:hidden'}
 								click={showReadNFCModal}
 							/>
 

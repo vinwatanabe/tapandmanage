@@ -1,7 +1,9 @@
-.sidebar {
-	transition: 1.3s;
-}
+@media only screen and (max-width: 640px) {
+	.sidebar {
+		transition: 1.3s;
+	}
 
-.sidebar.closed {
-	margin-left: -100%;
+	.sidebar.closed {
+		margin-left: -100%;
+	}
 }
