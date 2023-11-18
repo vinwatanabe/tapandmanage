@@ -69,6 +69,61 @@ router.post('/register', async (req, res) => {
 	}
 });
 
+// @route   POST /company/edit/:id
+// @desc    Edit a company information
+// @access  Private
+router.put('/edit/:id', Auth, async (req, res) => {
+	const { firstName, lastName, company, position, email, password, groups } =
+		req.body;
+
+	if (req.params.id === req.company.id) {
+		try {
+			let companyData = await Company.findById(req.params.id);
+
+			const companyInfo = {
+				firstName: firstName,
+				lastName: lastName,
+				company: company,
+				position: position,
+				email: email,
+				password: password,
+				groups: groups,
+			};
+
+			if (companyInfo.password === undefined || companyInfo.password === '') {
+				companyInfo.password = companyData.password;
+			} else {
+				const salt = await bcrypt.genSalt(10);
+				companyInfo.password = await bcrypt.hash(companyInfo.password, salt);
+			}
+
+			const savedCompany = await Company.findByIdAndUpdate(
+				req.params.id,
+				companyInfo,
+				{ new: true }
+			).catch((error) => {
+				console.error(error.message);
+				res.status(500).json({ msg: 'Error editing company' });
+			});
+
+			await savedCompany
+				.save()
+				.then((response) => {
+					res.json(response);
+				})
+				.catch((error) => {
+					console.error(error.message);
+					res.status(500).json({ msg: 'Error saving company' });
+				});
+		} catch (error) {
+			console.error(error.message);
+			res.status(500).json({ msg: 'Server error' });
+		}
+	} else {
+		res.status(401).json({ msg: 'Unauthorized action' });
+	}
+});
+
 // @route   DELETE /company/delete
 // @desc    Delete company
 // @access  Private

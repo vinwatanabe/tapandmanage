@@ -52,7 +52,7 @@ const Inventory = () => {
 				<Header />
 
 				<div className='px-5 sm:px-10'>
-					<div className='pt-5 pb-5 flex flex-col sm:flex-row items-center justify-between'>
+					<div className='py-5 flex flex-col sm:flex-row items-center justify-between'>
 						<p className='text-title-lg font-bold mb-4 sm:mb-0'>
 							Inventory Management
 						</p>

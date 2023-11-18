@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import ProfilePicture from '../images/picture/profile-picture.jpg';
 import ArrowIcon from '../images/assets/arrow-ico.svg';
 import { Context } from '../context/AuthContext';
@@ -39,28 +40,31 @@ const Header = () => {
 					<span className='material-symbols-outlined'>notifications</span>
 				</div>
 
-				<div className='flex flex-row mr-5 sm:mr-10 items-center'>
-					<div className='flex flex-col place-items-end mr-3'>
-						<p className='text-text-sm text-darkBlue'>
-							{user.firstName} {user.lastName}
-						</p>
-						<p className='text-text-xs text-detailGrey'>{user.company}</p>
+				<Link to={`/management/${localStorage.getItem('id')}`}>
+					<div className='flex flex-row mr-5 sm:mr-10 items-center'>
+						<div className='flex flex-col place-items-end mr-3'>
+							<p className='text-text-sm text-darkBlue'>
+								{user.firstName} {user.lastName}
+							</p>
+							<p className='text-text-xs text-detailGrey'>{user.company}</p>
+						</div>
+						<picture>
+							<img
+								className='w-[50px] h-auto rounded-full'
+								src={ProfilePicture}
+								alt='Profile'
+							/>
+						</picture>
+
+						<picture className='ml-3'>
+							<img
+								className='w-[11px] h-auto rounded-full'
+								src={ArrowIcon}
+								alt=''
+							/>
+						</picture>
 					</div>
-					<picture>
-						<img
-							className='w-[50px] h-auto rounded-full'
-							src={ProfilePicture}
-							alt='Profile'
-						/>
-					</picture>
-					<picture className='ml-3'>
-						<img
-							className='w-[11px] h-auto rounded-full'
-							src={ArrowIcon}
-							alt=''
-						/>
-					</picture>
-				</div>
+				</Link>
 			</div>
 		</header>
 	);

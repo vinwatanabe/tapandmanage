@@ -9,6 +9,7 @@ import Dashboard from '../pages/Dashboard/Dashboard';
 import Inventory from '../pages/Inventory/Inventory';
 import ItemDetails from '../pages/ItemDetails/ItemDetails';
 import NFC from '../pages/NFC/NFC';
+import UserEdit from '../pages/UserEdit/UserEdit';
 import NotFound from '../pages/NotFound/NotFound';
 import { Context } from '../context/AuthContext';
 
@@ -78,6 +79,14 @@ const AppRoutes = () => {
 				element={
 					<ProtectedRoute>
 						<NFC />
+					</ProtectedRoute>
+				}
+			/>
+			<Route
+				path='/management/:id'
+				element={
+					<ProtectedRoute>
+						<UserEdit />
 					</ProtectedRoute>
 				}
 			/>

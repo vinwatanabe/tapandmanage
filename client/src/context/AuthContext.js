@@ -131,6 +131,7 @@ function AuthContext({ children }) {
 				localStorage.setItem('firstName', data.firstName);
 				localStorage.setItem('lastName', data.lastName);
 				localStorage.setItem('company', data.company);
+				localStorage.setItem('id', data._id);
 
 				setUserDataLoaded(true);
 			})
@@ -304,6 +305,36 @@ function AuthContext({ children }) {
 			});
 	}
 
+	// Handle UserEdit
+	async function handleUserEdit(event, values, userId) {
+		event.preventDefault();
+
+		const url = `${process.env.REACT_APP_URL_HANDLER}/company/edit/${userId}`;
+		const token = localStorage.getItem('token');
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-auth-token': `${JSON.parse(token)}`,
+			},
+		};
+
+		await axios
+			.put(url, values, config)
+			.then((response) => {
+				localStorage.removeItem('firstName');
+				localStorage.removeItem('lastName');
+				localStorage.removeItem('company');
+
+				localStorage.setItem('firstName', response.data.firstName);
+				localStorage.setItem('lastName', response.data.lastName);
+				localStorage.setItem('company', response.data.company);
+				return navigate(0);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
 	// Handle Register NFC
 	async function registerNFC(event, values, params) {
 		event.preventDefault();
@@ -439,6 +470,7 @@ function AuthContext({ children }) {
 				handleDeleteGroup,
 				handleEditItem,
 				handleDeleteItem,
+				handleUserEdit,
 				registerNFC,
 				handleLoadNFCPage,
 				handleReadNFC,
