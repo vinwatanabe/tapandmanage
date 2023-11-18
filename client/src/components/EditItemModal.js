@@ -60,7 +60,7 @@ const EditItemModal = ({ groupName, itemInfo }) => {
 	return (
 		<div
 			id='editItemModal'
-			className='modal fixed w-full h-full bg-darkBlue bg-opacity-50 z-50 justify-center items-center hidden'>
+			className='modal fixed w-full h-full bg-darkBlue bg-opacity-50 z-[9999] justify-center items-center hidden'>
 			<div className='flex flex-col p-4 sm:p-8 bg-white basis-11/12 sm:basis-8/12 rounded-lg overflow-y-scroll max-h-[80%]'>
 				<p className='font-bold'>Edit item</p>
 				<hr className='text-borderGrey my-4' />

@@ -13,7 +13,7 @@ const formatDate = (d) => {
 
 		return finalDate;
 	} else {
-		return 'N/A';
+		return '';
 	}
 };
 

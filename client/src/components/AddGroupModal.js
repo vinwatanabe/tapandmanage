@@ -12,7 +12,7 @@ const AddGroupModal = () => {
 	return (
 		<div
 			id='addGroupModal'
-			className='modal fixed w-full h-full bg-darkBlue bg-opacity-50 z-50 justify-center items-center hidden'>
+			className='modal fixed w-full h-full bg-darkBlue bg-opacity-50 z-[9999] justify-center items-center hidden'>
 			<div className='flex flex-col p-4 sm:p-8 bg-white basis-11/12 sm:basis-6/12 rounded-lg'>
 				<p className='font-bold'>Add group</p>
 				<hr className='text-borderGrey my-4' />

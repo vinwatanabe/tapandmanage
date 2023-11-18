@@ -151,6 +151,49 @@ router.get('/:id', Auth, async (req, res) => {
 	}
 });
 
+// @route   GET /item/dashboard
+// @desc    Get dashboard items
+// @access  Private
+router.get('/dashboard/items', Auth, async (req, res) => {
+	try {
+		const expiredProducts = await Item.find({
+			company: req.company.id,
+			status: 'Expired',
+		});
+
+		const lowStockProducts = await Item.find({
+			company: req.company.id,
+			status: 'Low Stock',
+		});
+
+		const outOfStockProducts = await Item.find({
+			company: req.company.id,
+			status: 'Out of Stock',
+		});
+
+		const today = new Date();
+		const sevenDaysLater = new Date();
+		sevenDaysLater.setDate(today.getDate() + 7);
+
+		const expiringSoonProducts = await Item.find({
+			company: req.company.id,
+			expirationDate: { $gte: today, $lt: sevenDaysLater },
+		});
+
+		const dashboard = {
+			expired: expiredProducts,
+			expiresSoon: expiringSoonProducts,
+			lowStock: lowStockProducts,
+			outOfStock: outOfStockProducts,
+		};
+
+		res.json(dashboard);
+	} catch (error) {
+		console.error(error.message);
+		res.status(500).json({ msg: 'Server error' });
+	}
+});
+
 // @route   PUT /item/edit/:id
 // @desc    Edit specific item from company
 // @access  Private
