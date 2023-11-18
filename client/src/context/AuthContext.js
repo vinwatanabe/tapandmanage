@@ -58,7 +58,7 @@ function AuthContext({ children }) {
 				setAuthenticated(true);
 				setLoading(false);
 
-				return navigate('/inventory');
+				return navigate('/dashboard');
 			})
 			.catch((error) => {
 				setAuthenticated(false);
@@ -97,7 +97,7 @@ function AuthContext({ children }) {
 				setAuthenticated(true);
 				setLoading(false);
 
-				return navigate('/inventory');
+				return navigate('/dashboard');
 			})
 			.catch((error) => {
 				setAuthenticated(false);

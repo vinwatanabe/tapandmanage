@@ -23,6 +23,13 @@ const GroupBox = ({ groupId, groupName, items, styles, groupKey }) => {
 		setEditGroupInfo(groupEdit);
 	}
 
+	// Pagination code
+	useEffect(() => {
+		const itemArrays = createPagination(items);
+
+		setPaginationList(itemArrays);
+	}, [items]);
+
 	function createPagination(itemList) {
 		let list = [];
 
@@ -39,12 +46,6 @@ const GroupBox = ({ groupId, groupName, items, styles, groupKey }) => {
 
 		return list;
 	}
-
-	useEffect(() => {
-		const itemArrays = createPagination(items);
-
-		setPaginationList(itemArrays);
-	}, [items]);
 
 	let genNumber = (pageNumber) => {
 		let pageNumbers = [];

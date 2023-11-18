@@ -152,7 +152,7 @@ const UserEdit = () => {
 							url={'/inventory'}
 							context={(e) => handleUserEdit(e, values, userId)}
 						/>
-						<ButtonSecondary text={'Cancel'} url={'/'} />
+						<ButtonSecondary text={'Cancel'} url={'/dashboard'} />
 					</div>
 				</div>
 			</div>

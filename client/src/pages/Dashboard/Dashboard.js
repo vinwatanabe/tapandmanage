@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import ItemStatus from '../../components/ItemStatus';
-import Pagination from '../../components/Pagination';
+// import Pagination from '../../components/Pagination';
 import formatDate from '../../js/formatDate';
 import axios from 'axios';
 
@@ -12,6 +12,12 @@ const Dashboard = () => {
 	const [expired, setExpired] = useState([]);
 	const [lowStock, setLowStock] = useState([]);
 	const [outOfStock, setOutOfStock] = useState([]);
+	const [expiresSoonPagination, SetExpiresSoonPagination] = useState([]);
+	const [expiredPagination, SetExpiredPagination] = useState([]);
+	const [lowStockPagination, SetLowStockPagination] = useState([]);
+	const [outOfStockPagination, SetOutOfStockPagination] = useState([]);
+	const [page, setPage] = useState(0);
+	const index = page;
 
 	useEffect(() => {
 		async function getDashboard() {
@@ -40,11 +46,72 @@ const Dashboard = () => {
 		getDashboard();
 	}, []);
 
+	// Pagination
+	useEffect(() => {
+		const expiresSoonItems = createPagination(expiresSoon);
+		const expiredItems = createPagination(expired);
+		const lowStockItems = createPagination(lowStock);
+		const outOfStockItems = createPagination(outOfStock);
+
+		SetExpiresSoonPagination(expiresSoonItems);
+		SetExpiredPagination(expiredItems);
+		SetLowStockPagination(lowStockItems);
+		SetOutOfStockPagination(outOfStockItems);
+	}, [expired, lowStock, outOfStock, expiresSoon]);
+
+	function createPagination(itemList) {
+		let list = [];
+
+		for (let j = 1; j <= itemList.length; j += 5) {
+			let itemPage = [];
+			itemPage.push(itemList[j - 1]);
+
+			for (let i = j; i % 5 !== 0 && i < itemList.length; i++) {
+				itemPage.push(itemList[i]);
+			}
+
+			list.push(itemPage);
+		}
+
+		return list;
+	}
+
+	let genNumber = (pageNumber) => {
+		let pageNumbers = [];
+
+		for (let i = 1; i <= pageNumber; i++) {
+			const isActive = i === index + 1;
+
+			pageNumbers.push(
+				<p
+					key={i}
+					className={`${
+						isActive
+							? 'text-white bg-lightBlue hover:bg-lightBlueHover'
+							: 'text-detailGrey bg-white hover:bg-lightGrey cursor-pointer'
+					} px-3 py-1 rounded-lg pagination`}
+					onClick={() => setPage(i - 1)}>
+					{i}
+				</p>
+			);
+		}
+
+		return pageNumbers;
+	};
+
+	let paginationFunc = (pageNumber) => {
+		return (
+			<div className='flex flex-row justify-center mt-8 items-center gap-1'>
+				{genNumber(pageNumber)}
+			</div>
+		);
+	};
+
 	return (
 		<>
 			<Sidebar />
 
-			<div className='container w-full flex flex-col sm:float-right sm:ml-72 mx-auto'>
+			<div className='container mb-10 w-full flex flex-col sm:float-right sm:ml-72 mx-auto'>
 				<Header />
 
 				<div className='grid grid-cols-2 px-5 sm:px-10 gap-5'>
@@ -75,29 +142,32 @@ const Dashboard = () => {
 							<hr className='text-borderGrey' />
 						</div>
 
-						{expiresSoon.map((item, index) => {
-							return (
-								<div key={index}>
-									<Link to={`/item-details/${item._id}`}>
-										<div className='grid grid-cols-6 text-center my-2 text-text-sm items-center hover:text-lightBlue'>
-											<p className='my-1 col-span-2 text-left inline'>
-												{item.itemName}
-											</p>
+						{expiresSoonPagination[page] &&
+							expiresSoonPagination[page].map((item, index) => {
+								return (
+									<div key={index}>
+										<Link to={`/item-details/${item._id}`}>
+											<div className='grid grid-cols-6 text-center my-2 text-text-sm items-center hover:text-lightBlue'>
+												<p className='my-1 col-span-2 text-left inline'>
+													{item.itemName}
+												</p>
 
-											<p className='my-1 col-span-2 inline'>{`${item.units} ${item.measure}`}</p>
+												<p className='my-1 col-span-2 inline'>{`${item.units} ${item.measure}`}</p>
 
-											<p className='my-1 col-span-2 inline'>
-												{formatDate(item.expirationDate)}
-											</p>
-										</div>
-									</Link>
+												<p className='my-1 col-span-2 inline'>
+													{formatDate(item.expirationDate)}
+												</p>
+											</div>
+										</Link>
 
-									<hr className='text-borderGrey' />
-								</div>
-							);
-						})}
+										<hr className='text-borderGrey' />
+									</div>
+								);
+							})}
 
-						{expiresSoon.length > 5 ? <Pagination /> : ''}
+						{expiresSoon.length > 5
+							? paginationFunc(expiresSoonPagination.length)
+							: ''}
 					</div>
 
 					<div className='bg-white p-5 sm:p-8 rounded-lg basis-1/2 col-span-2 sm:col-span-1'>
@@ -123,31 +193,32 @@ const Dashboard = () => {
 							<hr className='text-borderGrey' />
 						</div>
 
-						{expired.map((item, index) => {
-							return (
-								<div key={index}>
-									<Link to={`/item-details/${item._id}`}>
-										<div className='grid grid-cols-6 text-center my-2 text-text-sm items-center hover:text-lightBlue'>
-											<p className='my-1 col-span-2 text-left inline'>
-												{item.itemName}
-											</p>
+						{expiredPagination[page] &&
+							expiredPagination[page].map((item, index) => {
+								return (
+									<div key={index}>
+										<Link to={`/item-details/${item._id}`}>
+											<div className='grid grid-cols-6 text-center my-2 text-text-sm items-center hover:text-lightBlue'>
+												<p className='my-1 col-span-2 text-left inline'>
+													{item.itemName}
+												</p>
 
-											<div className='my-1 col-span-2 inline'>
-												<ItemStatus status={item.status} />
+												<div className='my-1 col-span-2 inline'>
+													<ItemStatus status={item.status} />
+												</div>
+
+												<p className='my-1 col-span-2 inline'>
+													{formatDate(item.expirationDate)}
+												</p>
 											</div>
+										</Link>
 
-											<p className='my-1 col-span-2 inline'>
-												{formatDate(item.expirationDate)}
-											</p>
-										</div>
-									</Link>
+										<hr className='text-borderGrey' />
+									</div>
+								);
+							})}
 
-									<hr className='text-borderGrey' />
-								</div>
-							);
-						})}
-
-						{expired.length > 5 ? <Pagination /> : ''}
+						{expired.length > 5 ? paginationFunc(expiredPagination.length) : ''}
 					</div>
 
 					<div className='bg-white p-5 sm:p-8 rounded-lg basis-1/2 col-span-2 sm:col-span-1'>
@@ -173,29 +244,32 @@ const Dashboard = () => {
 							<hr className='text-borderGrey' />
 						</div>
 
-						{lowStock.map((item, index) => {
-							return (
-								<div key={index}>
-									<Link to={`/item-details/#!`}>
-										<div className='grid grid-cols-6 text-center my-2 text-text-sm items-center hover:text-lightBlue'>
-											<p className='my-1 col-span-2 text-left inline'>
-												{item.itemName}
-											</p>
+						{lowStockPagination[page] &&
+							lowStockPagination[page].map((item, index) => {
+								return (
+									<div key={index}>
+										<Link to={`/item-details/#!`}>
+											<div className='grid grid-cols-6 text-center my-2 text-text-sm items-center hover:text-lightBlue'>
+												<p className='my-1 col-span-2 text-left inline'>
+													{item.itemName}
+												</p>
 
-											<p className='my-1 col-span-2 inline'>{`${item.units} ${item.measure}`}</p>
+												<p className='my-1 col-span-2 inline'>{`${item.units} ${item.measure}`}</p>
 
-											<div className='my-1 col-span-2 inline'>
-												<ItemStatus status={item.status} />
+												<div className='my-1 col-span-2 inline'>
+													<ItemStatus status={item.status} />
+												</div>
 											</div>
-										</div>
-									</Link>
+										</Link>
 
-									<hr className='text-borderGrey' />
-								</div>
-							);
-						})}
+										<hr className='text-borderGrey' />
+									</div>
+								);
+							})}
 
-						{lowStock.length > 5 ? <Pagination /> : ''}
+						{lowStock.length > 5
+							? paginationFunc(lowStockPagination.length)
+							: ''}
 					</div>
 
 					<div className='bg-white p-5 sm:p-8 rounded-lg basis-1/2 col-span-2 sm:col-span-1'>
@@ -221,29 +295,32 @@ const Dashboard = () => {
 							<hr className='text-borderGrey' />
 						</div>
 
-						{outOfStock.map((item, index) => {
-							return (
-								<div key={index}>
-									<Link to={`/item-details/#!`}>
-										<div className='grid grid-cols-6 text-center my-2 text-text-sm items-center hover:text-lightBlue'>
-											<p className='my-1 col-span-2 text-left inline'>
-												{item.itemName}
-											</p>
+						{outOfStockPagination[page] &&
+							outOfStockPagination[page].map((item, index) => {
+								return (
+									<div key={index}>
+										<Link to={`/item-details/#!`}>
+											<div className='grid grid-cols-6 text-center my-2 text-text-sm items-center hover:text-lightBlue'>
+												<p className='my-1 col-span-2 text-left inline'>
+													{item.itemName}
+												</p>
 
-											<p className='my-1 col-span-2 inline'>{`${item.units} ${item.measure}`}</p>
+												<p className='my-1 col-span-2 inline'>{`${item.units} ${item.measure}`}</p>
 
-											<div className='my-1 col-span-2 inline'>
-												<ItemStatus status={item.status} />
+												<div className='my-1 col-span-2 inline'>
+													<ItemStatus status={item.status} />
+												</div>
 											</div>
-										</div>
-									</Link>
+										</Link>
 
-									<hr className='text-borderGrey' />
-								</div>
-							);
-						})}
+										<hr className='text-borderGrey' />
+									</div>
+								);
+							})}
 
-						{outOfStock.length > 5 ? <Pagination /> : ''}
+						{outOfStock.length > 5
+							? paginationFunc(outOfStockPagination.length)
+							: ''}
 					</div>
 				</div>
 			</div>
