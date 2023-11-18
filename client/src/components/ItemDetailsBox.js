@@ -61,12 +61,11 @@ const ItemDetailsBox = ({ item, styles }) => {
 						</div>
 
 						<div>
-							<p className='text-mediumGrey text-sm mb-1'>Margin</p>
+							<p className='text-mediumGrey text-sm mb-1'>Markup</p>
 							<p>
-								{(
-									((item.sellingPrice - item.cost) * 100) /
-									item.sellingPrice
-								).toFixed(2)}
+								{(((item.sellingPrice - item.cost) / item.cost) * 100).toFixed(
+									2
+								)}
 								% (${(item.sellingPrice - item.cost).toFixed(2)})
 							</p>
 						</div>
