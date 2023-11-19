@@ -4,6 +4,9 @@ const Auth = require('../middleware/authMiddleware');
 const Group = require('../model/Group');
 const Item = require('../model/Item');
 
+const checkStatus = require('../js/checkStatus');
+const processStatus = require('../js/processStatus');
+
 const router = express.Router();
 
 // @route   POST /item/new
@@ -60,6 +63,12 @@ router.post('/new', Auth, async (req, res) => {
 				company: req.company.id,
 			});
 
+			item.status = await checkStatus(
+				item.units,
+				item.minimumAmount,
+				item.expirationDate
+			);
+
 			const itemSaved = await item.save().catch(() => {
 				res.status(500).json({ msg: 'Error: Item not saved' });
 			});
@@ -92,6 +101,7 @@ router.get('/all', Auth, async (req, res) => {
 		if (!items[0]) {
 			res.status(404).json({ msg: 'No items found' });
 		} else {
+			await processStatus(items);
 			res.json(items);
 		}
 	} catch (error) {
@@ -252,6 +262,12 @@ router.put('/edit/:id', Auth, async (req, res) => {
 					itemDetails: itemDetails,
 					company: req.company.id,
 				};
+
+				editedItem.status = await checkStatus(
+					editedItem.units,
+					editedItem.minimumAmount,
+					editedItem.expirationDate
+				);
 
 				const savedItem = await Item.findByIdAndUpdate(
 					req.params.id,

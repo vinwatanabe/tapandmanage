@@ -3,6 +3,8 @@ const express = require('express');
 const Auth = require('../middleware/authMiddleware');
 const Item = require('../model/Item');
 
+const checkStatus = require('../js/checkStatus');
+
 const router = express.Router();
 
 // @route   PUT /nfc/remove/:id
@@ -38,6 +40,12 @@ router.put('/remove/:id', Auth, async (req, res) => {
 					itemDetails: item.itemDetails,
 					company: req.company.id,
 				};
+
+				editedItem.status = await checkStatus(
+					editedItem.units,
+					editedItem.minimumAmount,
+					editedItem.expirationDate
+				);
 
 				let savedItem = await Item.findByIdAndUpdate(
 					req.params.id,
@@ -97,6 +105,12 @@ router.put('/add/:id', Auth, async (req, res) => {
 				itemDetails: item.itemDetails,
 				company: req.company.id,
 			};
+
+			editedItem.status = await checkStatus(
+				editedItem.units,
+				editedItem.minimumAmount,
+				editedItem.expirationDate
+			);
 
 			let savedItem = await Item.findByIdAndUpdate(req.params.id, editedItem, {
 				new: true,

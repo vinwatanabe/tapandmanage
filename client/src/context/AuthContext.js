@@ -78,7 +78,7 @@ function AuthContext({ children }) {
 		event.preventDefault();
 
 		const url = `${process.env.REACT_APP_URL_HANDLER}/auth/login`;
-		const config = {
+		let config = {
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -87,6 +87,7 @@ function AuthContext({ children }) {
 		let token;
 		setLoading(true);
 
+		// Work on login
 		await axios
 			.post(url, values, config)
 			.then((resp) => {
@@ -96,8 +97,6 @@ function AuthContext({ children }) {
 				axios.defaults.headers.Authorization = `Bearer ${token}`;
 				setAuthenticated(true);
 				setLoading(false);
-
-				return navigate('/dashboard');
 			})
 			.catch((error) => {
 				setAuthenticated(false);
@@ -110,6 +109,24 @@ function AuthContext({ children }) {
 			});
 
 		await getUserData(token);
+
+		// Update all data in DB first to check if all items has the correct status
+		config = {
+			headers: {
+				'Content-Type': 'application/json',
+				'x-auth-token': token,
+			},
+		};
+
+		const updateUrl = `${process.env.REACT_APP_URL_HANDLER}/item/all`;
+		await axios
+			.get(updateUrl, config)
+			.then((response) => {
+				return navigate('/dashboard');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 
 	// Get user data
