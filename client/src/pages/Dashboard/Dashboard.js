@@ -12,12 +12,15 @@ const Dashboard = () => {
 	const [expired, setExpired] = useState([]);
 	const [lowStock, setLowStock] = useState([]);
 	const [outOfStock, setOutOfStock] = useState([]);
-	const [expiresSoonPagination, SetExpiresSoonPagination] = useState([]);
-	const [expiredPagination, SetExpiredPagination] = useState([]);
-	const [lowStockPagination, SetLowStockPagination] = useState([]);
-	const [outOfStockPagination, SetOutOfStockPagination] = useState([]);
-	const [page, setPage] = useState(0);
-	const index = page;
+	const [expiresSoonPagination, setExpiresSoonPagination] = useState([]);
+	const [expiredPagination, setExpiredPagination] = useState([]);
+	const [lowStockPagination, setLowStockPagination] = useState([]);
+	const [outOfStockPagination, setOutOfStockPagination] = useState([]);
+
+	const [expiresSoonPage, setExpiresSoonPage] = useState(0);
+	const [expiredPage, setExpiredPage] = useState(0);
+	const [lowStockPage, setLowStockPage] = useState(0);
+	const [outOfStockPage, setOutOfStockPage] = useState(0);
 
 	useEffect(() => {
 		async function getDashboard() {
@@ -31,32 +34,31 @@ const Dashboard = () => {
 				},
 			};
 
-			await axios
-				.get(url, config)
-				.then((resp) => {
-					const allItems = resp.data;
-					setExpiresSoon(allItems.expiresSoon);
-					setExpired(allItems.expired);
-					setLowStock(allItems.lowStock);
-					setOutOfStock(allItems.outOfStock);
-				})
-				.catch((error) => console.log(error));
+			try {
+				const resp = await axios.get(url, config);
+				const allItems = resp.data;
+				setExpiresSoon(allItems.expiresSoon);
+				setExpired(allItems.expired);
+				setLowStock(allItems.lowStock);
+				setOutOfStock(allItems.outOfStock);
+			} catch (error) {
+				console.log(error);
+			}
 		}
 
 		getDashboard();
 	}, []);
 
-	// Pagination
 	useEffect(() => {
 		const expiresSoonItems = createPagination(expiresSoon);
 		const expiredItems = createPagination(expired);
 		const lowStockItems = createPagination(lowStock);
 		const outOfStockItems = createPagination(outOfStock);
 
-		SetExpiresSoonPagination(expiresSoonItems);
-		SetExpiredPagination(expiredItems);
-		SetLowStockPagination(lowStockItems);
-		SetOutOfStockPagination(outOfStockItems);
+		setExpiresSoonPagination(expiresSoonItems);
+		setExpiredPagination(expiredItems);
+		setLowStockPagination(lowStockItems);
+		setOutOfStockPagination(outOfStockItems);
 	}, [expired, lowStock, outOfStock, expiresSoon]);
 
 	function createPagination(itemList) {
@@ -76,11 +78,11 @@ const Dashboard = () => {
 		return list;
 	}
 
-	let genNumber = (pageNumber) => {
+	let genNumber = (pageNumber, currentPage, setPage) => {
 		let pageNumbers = [];
 
 		for (let i = 1; i <= pageNumber; i++) {
-			const isActive = i === index + 1;
+			const isActive = i === currentPage + 1;
 
 			pageNumbers.push(
 				<p
@@ -99,10 +101,10 @@ const Dashboard = () => {
 		return pageNumbers;
 	};
 
-	let paginationFunc = (pageNumber) => {
+	let paginationFunc = (pageNumber, currentPage, setPage) => {
 		return (
 			<div className='flex flex-row justify-center mt-8 items-center gap-1'>
-				{genNumber(pageNumber)}
+				{genNumber(pageNumber, currentPage, setPage)}
 			</div>
 		);
 	};
@@ -142,8 +144,8 @@ const Dashboard = () => {
 							<hr className='text-borderGrey' />
 						</div>
 
-						{expiresSoonPagination[page] &&
-							expiresSoonPagination[page].map((item, index) => {
+						{expiresSoonPagination[expiresSoonPage] &&
+							expiresSoonPagination[expiresSoonPage].map((item, index) => {
 								return (
 									<div key={index}>
 										<Link to={`/item-details/${item._id}`}>
@@ -164,9 +166,12 @@ const Dashboard = () => {
 									</div>
 								);
 							})}
-
 						{expiresSoon.length > 5
-							? paginationFunc(expiresSoonPagination.length)
+							? paginationFunc(
+									expiresSoonPagination.length,
+									expiresSoonPage,
+									setExpiresSoonPage
+							  )
 							: ''}
 					</div>
 
@@ -193,8 +198,8 @@ const Dashboard = () => {
 							<hr className='text-borderGrey' />
 						</div>
 
-						{expiredPagination[page] &&
-							expiredPagination[page].map((item, index) => {
+						{expiredPagination[expiredPage] &&
+							expiredPagination[expiredPage].map((item, index) => {
 								return (
 									<div key={index}>
 										<Link to={`/item-details/${item._id}`}>
@@ -218,7 +223,13 @@ const Dashboard = () => {
 								);
 							})}
 
-						{expired.length > 5 ? paginationFunc(expiredPagination.length) : ''}
+						{expired.length > 5
+							? paginationFunc(
+									expiredPagination.length,
+									expiredPage,
+									setExpiredPage
+							  )
+							: ''}
 					</div>
 
 					<div className='bg-white p-5 sm:p-8 rounded-lg basis-1/2 col-span-2 sm:col-span-1'>
@@ -244,8 +255,8 @@ const Dashboard = () => {
 							<hr className='text-borderGrey' />
 						</div>
 
-						{lowStockPagination[page] &&
-							lowStockPagination[page].map((item, index) => {
+						{lowStockPagination[lowStockPage] &&
+							lowStockPagination[lowStockPage].map((item, index) => {
 								return (
 									<div key={index}>
 										<Link to={`/item-details/#!`}>
@@ -268,7 +279,11 @@ const Dashboard = () => {
 							})}
 
 						{lowStock.length > 5
-							? paginationFunc(lowStockPagination.length)
+							? paginationFunc(
+									lowStockPagination.length,
+									lowStockPage,
+									setLowStockPage
+							  )
 							: ''}
 					</div>
 
@@ -295,8 +310,8 @@ const Dashboard = () => {
 							<hr className='text-borderGrey' />
 						</div>
 
-						{outOfStockPagination[page] &&
-							outOfStockPagination[page].map((item, index) => {
+						{outOfStockPagination[outOfStockPage] &&
+							outOfStockPagination[outOfStockPage].map((item, index) => {
 								return (
 									<div key={index}>
 										<Link to={`/item-details/#!`}>
@@ -319,7 +334,11 @@ const Dashboard = () => {
 							})}
 
 						{outOfStock.length > 5
-							? paginationFunc(outOfStockPagination.length)
+							? paginationFunc(
+									outOfStockPagination.length,
+									outOfStockPage,
+									setOutOfStockPage
+							  )
 							: ''}
 					</div>
 				</div>
