@@ -20,6 +20,7 @@ function AuthContext({ children }) {
 	const [authenticated, setAuthenticated] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [userDataLoaded, setUserDataLoaded] = useState(false);
+	const [notificationsRead, setNotificationsRead] = useState([]);
 	let navigate = useNavigate();
 
 	useEffect(() => {
@@ -125,7 +126,7 @@ function AuthContext({ children }) {
 				return navigate('/dashboard');
 			})
 			.catch((error) => {
-				console.log(error);
+				return navigate('/dashboard');
 			});
 	}
 
@@ -475,6 +476,8 @@ function AuthContext({ children }) {
 				setLoading,
 				userDataLoaded,
 				setUserDataLoaded,
+				notificationsRead,
+				setNotificationsRead,
 				getUserData,
 				handleRegister,
 				handleLogin,

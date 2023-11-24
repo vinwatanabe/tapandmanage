@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import ProfilePicture from '../images/picture/profile-picture.jpg';
 import ArrowIcon from '../images/assets/arrow-ico.svg';
@@ -9,7 +9,19 @@ import { toggleNotification } from '../js/notificationAnimation';
 
 const Header = () => {
 	const [user, setUser] = useState({});
-	const { userDataLoaded } = useContext(Context);
+	const { userDataLoaded, notificationsRead } = useContext(Context);
+
+	const checkNotificationsRead = useCallback(() => {
+		const allRead = notificationsRead.every(
+			(notification) => notification.isRead
+		);
+
+		if (allRead) {
+			document.querySelector('.activeNotification').classList.add('hidden');
+		} else {
+			document.querySelector('.activeNotification').classList.remove('hidden');
+		}
+	}, [notificationsRead]);
 
 	useEffect(() => {
 		if (userDataLoaded || localStorage.getItem('firstName')) {
@@ -23,8 +35,10 @@ const Header = () => {
 				company: company,
 			};
 			setUser(userData);
+
+			checkNotificationsRead();
 		}
-	}, [userDataLoaded]);
+	}, [userDataLoaded, checkNotificationsRead]);
 
 	return (
 		<header className='flex flex-row bg-white h-20 w-full justify-between sm:justify-end items-center'>
@@ -41,7 +55,7 @@ const Header = () => {
 					<div
 						onClick={toggleNotification}
 						className='grid place-content-center'>
-						<span className='absolute justify-self-end float-right w-[8px] h-[8px] bg-darkRed rounded-full' />
+						<span className='activeNotification absolute justify-self-end float-right w-[8px] h-[8px] bg-darkRed rounded-full' />
 						<span className='material-symbols-outlined'>notifications</span>
 					</div>
 

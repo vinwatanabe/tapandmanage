@@ -29,6 +29,7 @@ app.use('/auth', require('./routes/auth'));
 app.use('/group', require('./routes/group'));
 app.use('/item', require('./routes/item'));
 app.use('/nfc', require('./routes/nfc'));
+app.use('/notification', require('./routes/notification'));
 
 // Listen
 const PORT = process.env.PORT || 5000;

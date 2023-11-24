@@ -8,7 +8,7 @@ async function createNotification(
 	prevStatus,
 	newStatus
 ) {
-	if (prevStatus !== newStatus) {
+	if (prevStatus !== newStatus || newStatus == 'In Stock') {
 		const notification = new Notification({
 			company: company,
 			groupName: groupName,

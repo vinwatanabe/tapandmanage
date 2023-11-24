@@ -171,17 +171,17 @@ router.get('/dashboard/items', Auth, async (req, res) => {
 		const expiredProducts = await Item.find({
 			company: req.company.id,
 			status: 'Expired',
-		});
+		}).sort({ expirationDate: -1 });
 
 		const lowStockProducts = await Item.find({
 			company: req.company.id,
 			status: 'Low Stock',
-		});
+		}).sort({ createdAt: -1 });
 
 		const outOfStockProducts = await Item.find({
 			company: req.company.id,
 			status: 'Out of Stock',
-		});
+		}).sort({ createdAt: -1 });
 
 		const today = new Date();
 		const sevenDaysLater = new Date();
@@ -190,7 +190,7 @@ router.get('/dashboard/items', Auth, async (req, res) => {
 		const expiringSoonProducts = await Item.find({
 			company: req.company.id,
 			expirationDate: { $gte: today, $lt: sevenDaysLater },
-		});
+		}).sort({ expirationDate: 1 });
 
 		const dashboard = {
 			expired: expiredProducts,

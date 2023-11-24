@@ -96,9 +96,10 @@ router.put('/edit/:id', Auth, async (req, res) => {
 // @access  Private
 router.get('/all', Auth, async (req, res) => {
 	try {
-		const groups = await Group.find({ company: req.company.id }).populate(
-			'items'
-		);
+		const groups = await Group.find({ company: req.company.id }).populate({
+			path: 'items',
+			options: { sort: { createdAt: -1 } },
+		});
 		res.json(groups);
 	} catch (error) {
 		console.error(error.message);

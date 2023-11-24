@@ -70,7 +70,7 @@ router.post('/register', async (req, res) => {
 	}
 });
 
-// @route   POST /company/edit/:id
+// @route   PUT /company/edit/:id
 // @desc    Edit a company information
 // @access  Private
 router.put('/edit/:id', Auth, async (req, res) => {
