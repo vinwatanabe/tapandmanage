@@ -22,7 +22,7 @@ const HeaderHome = () => {
 
 	const userLoggedButtons = (
 		<div className='flex flex-row gap-5'>
-			<ButtonPrimary text={'Console'} url={'/inventory'} />
+			<ButtonPrimary text={'Console'} url={'/dashboard'} />
 		</div>
 	);
 

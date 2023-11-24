@@ -4,6 +4,8 @@ import ProfilePicture from '../images/picture/profile-picture.jpg';
 import ArrowIcon from '../images/assets/arrow-ico.svg';
 import { Context } from '../context/AuthContext';
 import { toggleSideBar } from '../js/sidebarAnimation';
+import NotificationBox from './NotificationBox';
+import { toggleNotification } from '../js/notificationAnimation';
 
 const Header = () => {
 	const [user, setUser] = useState({});
@@ -35,9 +37,15 @@ const Header = () => {
 			</div>
 
 			<div className='flex flex-row items-center'>
-				<div className='grid bg-background rounded-full w-[38px] h-[38px] place-content-center mr-5 border border-borderGrey'>
-					<span className='absolute justify-self-end float-right w-[8px] h-[8px] bg-darkRed rounded-full' />
-					<span className='material-symbols-outlined'>notifications</span>
+				<div className='relative grid bg-background rounded-full w-[38px] h-[38px]  mr-5 border border-borderGrey cursor-pointer'>
+					<div
+						onClick={toggleNotification}
+						className='grid place-content-center'>
+						<span className='absolute justify-self-end float-right w-[8px] h-[8px] bg-darkRed rounded-full' />
+						<span className='material-symbols-outlined'>notifications</span>
+					</div>
+
+					<NotificationBox />
 				</div>
 
 				<Link to={`/management/${localStorage.getItem('id')}`}>
