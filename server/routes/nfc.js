@@ -1,9 +1,11 @@
 const express = require('express');
 
 const Auth = require('../middleware/authMiddleware');
+const Group = require('../model/Group');
 const Item = require('../model/Item');
 
 const checkStatus = require('../js/checkStatus');
+const createNotification = require('../js/createNotification');
 
 const router = express.Router();
 
@@ -41,11 +43,27 @@ router.put('/remove/:id', Auth, async (req, res) => {
 					company: req.company.id,
 				};
 
+				const previousStatus = editedItem.status;
+
 				editedItem.status = await checkStatus(
 					editedItem.units,
 					editedItem.minimumAmount,
 					editedItem.expirationDate
 				);
+
+				if (previousStatus !== editedItem.status) {
+					const groupData = await Group.findById(editedItem.group);
+					const groupName = groupData.groupName;
+
+					await createNotification(
+						editedItem.company,
+						groupName,
+						req.params.id,
+						editedItem.itemName,
+						previousStatus,
+						editedItem.status
+					);
+				}
 
 				let savedItem = await Item.findByIdAndUpdate(
 					req.params.id,
@@ -106,11 +124,27 @@ router.put('/add/:id', Auth, async (req, res) => {
 				company: req.company.id,
 			};
 
+			const previousStatus = editedItem.status;
+
 			editedItem.status = await checkStatus(
 				editedItem.units,
 				editedItem.minimumAmount,
 				editedItem.expirationDate
 			);
+
+			if (previousStatus !== editedItem.status) {
+				const groupData = await Group.findById(editedItem.group);
+				const groupName = groupData.groupName;
+
+				await createNotification(
+					editedItem.company,
+					groupName,
+					req.params.id,
+					editedItem.itemName,
+					previousStatus,
+					editedItem.status
+				);
+			}
 
 			let savedItem = await Item.findByIdAndUpdate(req.params.id, editedItem, {
 				new: true,

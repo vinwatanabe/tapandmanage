@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const Company = require('../model/Company');
 const Group = require('../model/Group');
 const Item = require('../model/Item');
+const Notification = require('../model/Notification');
 const Auth = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -131,6 +132,7 @@ router.delete('/delete', Auth, async (req, res) => {
 	try {
 		await Item.deleteMany({ company: req.company.id });
 		await Group.deleteMany({ company: req.company.id });
+		await Notification.deleteMany({ company: req.company.id });
 		await Company.findByIdAndDelete(req.company.id);
 		res.json({ msg: 'Company deleted' });
 	} catch (error) {

@@ -1,5 +1,7 @@
 const checkStatus = require('./checkStatus');
 const Item = require('../model/Item');
+const createNotification = require('../js/createNotification');
+const Group = require('../model/Group');
 
 async function processStatus(items) {
 	for (let i = 0; i < items.length; i++) {
@@ -26,11 +28,27 @@ async function processStatus(items) {
 				company: itemData.company,
 			};
 
+			const previousStatus = editedItem.status;
+
 			editedItem.status = await checkStatus(
 				editedItem.units,
 				editedItem.minimumAmount,
 				editedItem.expirationDate
 			);
+
+			if (previousStatus !== editedItem.status) {
+				const groupData = await Group.findById(itemData.group);
+				const groupName = groupData.groupName;
+
+				await createNotification(
+					editedItem.company,
+					groupName,
+					itemData._id,
+					editedItem.itemName,
+					previousStatus,
+					editedItem.status
+				);
+			}
 
 			const savedItem = await Item.findByIdAndUpdate(itemData._id, editedItem, {
 				new: true,

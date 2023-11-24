@@ -3,9 +3,11 @@ const express = require('express');
 const Auth = require('../middleware/authMiddleware');
 const Group = require('../model/Group');
 const Item = require('../model/Item');
+const Notification = require('../model/Notification');
 
 const checkStatus = require('../js/checkStatus');
 const processStatus = require('../js/processStatus');
+const createNotification = require('../js/createNotification');
 
 const router = express.Router();
 
@@ -263,10 +265,21 @@ router.put('/edit/:id', Auth, async (req, res) => {
 					company: req.company.id,
 				};
 
+				const previousStatus = editedItem.status;
+
 				editedItem.status = await checkStatus(
 					editedItem.units,
 					editedItem.minimumAmount,
 					editedItem.expirationDate
+				);
+
+				await createNotification(
+					editedItem.company,
+					groupName,
+					req.params.id,
+					editedItem.itemName,
+					previousStatus,
+					editedItem.status
 				);
 
 				const savedItem = await Item.findByIdAndUpdate(
@@ -346,6 +359,8 @@ router.delete('/delete/:id', Auth, async (req, res) => {
 					console.error(error.message);
 					res.status(500).json({ msg: 'Error deleting item' });
 				});
+
+			await Notification.deleteMany({ itemId: itemId });
 		}
 	} catch (error) {
 		console.error(error.message);
